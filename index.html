@@ -1,0 +1,138 @@
+<html>
+
+    <head>
+	<meta charset="utf-8">
+	<style>
+	 body { margin: 0 }
+	 canvas { width: 100% height: 100% }
+	</style>
+    </head>
+
+    <body>
+	<script src="lib/three.js"></script>
+	<script src="lib/tween.js"></script>
+	<script src="lib/physi.js"></script>
+	<script src="lib/ammo.js"></script>
+	<script src="lib/threex.keyboardstate.js"></script>
+	<script src="lib/threex.loop.js"></script>
+	<script src="lib/OrbitControls.js"></script>
+	<script>
+
+	 'use strict'
+
+	 const shadowMapRes = 4096
+
+	 const deg_to_rad = (deg) => deg * (Math.PI / 180)
+
+	 Physijs.scripts.worker = "lib/physijs_worker.js"
+	 Physijs.scripts.ammo = "ammo.js"
+
+	 // SCENE
+	 let scene = new Physijs.Scene
+	 scene.setGravity(new THREE.Vector3(0,-30,0))
+	 scene.background = new THREE.Color(0x3d8dcc)
+
+	 // CAMERA
+	 let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+	 // RENDERER
+	 let renderer = new THREE.WebGLRenderer()
+	 renderer.setSize( window.innerWidth, window.innerHeight )
+	 document.body.appendChild( renderer.domElement )
+
+	 renderer.shadowMap.enabled = true
+	 renderer.shadowMap.type = THREE.PCFSoftShadowMap
+	 renderer.shadowMap.renderReverseSided = false
+
+	 renderer.gammaInput = true
+	 renderer.gammaOutput = true
+
+	 // ------------------------- LOADER CODE --------------------
+	 let texLoader = new THREE.TextureLoader()
+	 let jloader = new THREE.JSONLoader()
+
+	 const load_file = (model_f, tex_f) => {
+	     return new Promise((resolve,reject) => {
+		 jloader.load(model_f, (geometry, mats) => {
+		     texLoader.load(tex_f, (texture) => {
+			 let mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({map: texture, flatShading: true, shininess: 0, specular: 0x000, morphTargets: true, vertexColors: THREE.FaceColors }) )
+			 resolve(mesh)
+		     }, (progress) => {}, (error) => reject(error))
+		 })
+	     }, (prog) => {}, (err) => reject(err))
+	 }
+
+	 // LIGHTING
+	 let light = new THREE.DirectionalLight(0x999999, 1, 100)
+	 light.position.set(0,30,0)
+
+	 light.shadow.mapSize.width = shadowMapRes
+	 light.shadow.mapSize.height = shadowMapRes
+	 light.shadow.camera.left = -85
+	 light.shadow.camera.right = 45
+	 light.shadow.camera.top = 50
+	 light.shadow.camera.bottom = -50
+	 light.shadow.camera.near = 1
+	 light.shadow.camera.far = 50
+	 light.castShadow = true
+
+	 let light_helper = new THREE.DirectionalLightHelper(light, 5)
+	 scene.add(light_helper)
+
+	 let shadow_helper = new THREE.CameraHelper(light.shadow.camera)
+	 scene.add(shadow_helper)
+
+	 // AMBIENT LIGHT
+	 let ambient = new THREE.AmbientLight(0x555555)
+
+	 scene.add(light)
+	 scene.add(ambient)
+	 //
+	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
+	 //
+
+	 // ORBIT CONTROLS
+	 let controls = new THREE.OrbitControls( camera, renderer.domElement )
+
+	 // KEYBOARD
+	 let keyboard = new THREEx.KeyboardState()
+
+	 // ANIM LOOP
+	 const animate = () => {
+	     renderer.render(scene, camera)
+	     TWEEN.update()
+	 }
+
+
+	 // ::::::::::::::::: UPDATE LOOP ::::::::::::::::::
+
+	 const update = () => {
+	     scene.simulate()
+	 }
+
+	 //
+	 // :::::::::::::: UTIL FUNCTIONS ::::::::::::::::::::
+	 //
+
+	 const draw_vec = (vec) => {
+	     let arr = new THREE.ArrowHelper(vec.clone().normalize(),
+					     new THREE.Vector3(0,0,0),
+					     vec.length(),
+					     0x00ff00)
+	     scene.add(arr)
+	 }
+
+	 let animLoop = new THREEx.RenderingLoop()
+	 let physLoop = new THREEx.PhysicsLoop(60)
+
+	 animLoop.add(animate)
+	 physLoop.add(update)
+
+	 animLoop.start()
+	 physLoop.start()
+
+
+	</script>
+    </body>
+
+</html>
