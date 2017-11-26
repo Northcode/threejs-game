@@ -87,6 +87,10 @@
 
 	 scene.add(light)
 	 scene.add(ambient)
+
+	 camera.position.set(5,5,5)
+
+	 scene.add(camera)
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
@@ -100,7 +104,6 @@
 	 // ANIM LOOP
 	 const animate = () => {
 	     renderer.render(scene, camera)
-	     TWEEN.update()
 	 }
 
 
