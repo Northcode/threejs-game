@@ -64,7 +64,8 @@
 
 	 // LIGHTING
 	 let light = new THREE.DirectionalLight(0x999999, 1, 100)
-	 light.position.set(0,30,0)
+	 light.position.set(30,30,10)
+	 light.target.position.set(0,0,0)
 
 	 light.shadow.mapSize.width = shadowMapRes
 	 light.shadow.mapSize.height = shadowMapRes
@@ -73,7 +74,7 @@
 	 light.shadow.camera.top = 50
 	 light.shadow.camera.bottom = -50
 	 light.shadow.camera.near = 1
-	 light.shadow.camera.far = 50
+	 light.shadow.camera.far = 150
 	 light.castShadow = true
 
 	 let light_helper = new THREE.DirectionalLightHelper(light, 5)
@@ -94,6 +95,20 @@
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
+
+	 let plane = new Physijs.PlaneMesh(new THREE.PlaneGeometry(100,100),
+					   new THREE.MeshStandardMaterial({color: 0x2222aa }))
+	 plane.receiveShadow = true
+	 plane.rotation.set(deg_to_rad(270), 0,0)
+
+	 scene.add(plane)
+
+	 let box = new THREE.Mesh(new THREE.BoxGeometry(3,3,3), new THREE.MeshStandardMaterial({ color: 0x22aa22 }))
+
+	 box.castShadow = true
+	 box.position.set(0,5,0)
+	 scene.add(box)
+	 
 
 	 // ORBIT CONTROLS
 	 let controls = new THREE.OrbitControls( camera, renderer.domElement )
