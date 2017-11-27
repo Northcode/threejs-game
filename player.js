@@ -13,59 +13,51 @@ class Player extends GameObject
 
     }
 
-    update(keyboard, scene) {
-	super.update(keyboard, scene)
+	update(keyboard, scene) {
+		super.update(keyboard, scene)
 
-	let rotMatrix = this.controls.getObject().matrix
-	let old_velocity = this.model.getLinearVelocity()
-	let current_speed = Math.sqrt(Math.pow(old_velocity.x, 2) + Math.pow(old_velocity.z,2))
-	let new_velocity = new THREE.Vector3(0,0,0)
+		let rotMatrix = this.controls.getObject().matrix
+		let old_velocity = this.model.getLinearVelocity()
+		let current_speed = Math.sqrt(Math.pow(old_velocity.x, 2) + Math.pow(old_velocity.z,2))
+		let new_velocity = new THREE.Vector3(0,0,0)
+		let cur_mov_speed
 
-	if (keyboard.pressed("W")) {
-	    new_velocity.z = -this.movespeed
-	}
-	if (keyboard.pressed("S")) {
-	    new_velocity.z = this.movespeed
-	}
-	if (keyboard.pressed("A")) {
-	    new_velocity.x = -this.movespeed
-	}
-	if (keyboard.pressed("D")) {
-	    new_velocity.x = this.movespeed
-	}
+		if (keyboard.pressed("shift")) {
+			cur_mov_speed = this.sprintspeed
+		}else {
+			cur_mov_speed = this.movespeed
+		}
 
-	new_velocity.applyMatrix4(rotMatrix)
-	new_velocity.y = old_velocity.y
+		if (keyboard.pressed("W")) {
+			new_velocity.z = -cur_mov_speed
+		}
+		if (keyboard.pressed("S")) {
+			new_velocity.z = cur_mov_speed
+		}
+		if (keyboard.pressed("A")) {
+			new_velocity.x = -cur_mov_speed
+		}
+		if (keyboard.pressed("D")) {
+			new_velocity.x = cur_mov_speed
+		}
 
-	if (keyboard.pressed("space")) {
+		new_velocity.applyMatrix4(rotMatrix)
+		new_velocity.y = old_velocity.y
 
-	    let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 2 )
-	    raycaster.ray.origin.copy( this.model.position )
-	    let intersections = raycaster.intersectObjects( scene.children )
+		if (keyboard.pressed("space")) {
 
-	    let arrow = new THREE.ArrowHelper(raycaster.ray.direction.normalize(), raycaster.ray.origin, 2, 0xff0000)
-	    scene.add(arrow)
+			let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 2 )
+			raycaster.ray.origin.copy( this.model.position )
+			let intersections = raycaster.intersectObjects( scene.children )
 
-	    if (intersections.length > 0) {
-		console.log("Jump!");
-		new_velocity.y = this.jumppower
-	    }
-	}
+			if (intersections.length > 0) {
+				console.log("Jump!");
+				new_velocity.y = this.jumppower
+			}
+		}
 
-	if (current_speed < this.maxspeed) {
-
-	    // if ((new_velocity.x > 0 && old_velocity.x < 0)
-	    // 	|| (new_velocity.x < 0 && old_velocity.x > 0)) {
-	    // 	old_velocity.x = 0
-	    // }
-	    // if ((new_velocity.z > 0 && old_velocity.z < 0)
-	    // 	|| (new_velocity.z > 0 && old_velocity.z > 0)) {
-	    // 	old_velocity.z = 0
-	    // }
-
-	    let tot_speed = new THREE.Vector3()
-	    // tot_speed.addVectors(old_velocity, new_velocity)
-
-	    this.model.setLinearVelocity(new_velocity)
+		let tot_speed = new THREE.Vector3()
+		this.model.setLinearVelocity(new_velocity)
+		this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 	}
 }
