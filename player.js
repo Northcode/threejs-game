@@ -4,14 +4,14 @@ class Player extends GameObject
 	super()
 	this.model = new Physijs.CapsuleMesh(
 	    new THREE.CylinderGeometry(1,1,2,32),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 4)
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1)
 	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 	this.model.castShadow = true
 	this.controls = controls
 	this.model.add(controls.getObject())
 	this.movespeed = 10
 	this.sprintspeed = 20
-	this.jumppower = 6.5
+	this.jumppower = 15
 
     }
 
