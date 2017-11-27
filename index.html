@@ -17,6 +17,9 @@
 	<script src="lib/threex.loop.js"></script>
 	<script src="lib/OrbitControls.js"></script>
 	<script src="lib/PointerLockControls.js"></script>
+	<script src="util.js"></script>
+	<script src="GameObject.js"></script>
+	<script src="player.js"></script>
 	<script>
 
 	 'use strict'
@@ -29,6 +32,8 @@
 
 	 let moveSpeed = 0.5
 
+	 let gameobjects = []
+
 	 Physijs.scripts.worker = "lib/physijs_worker.js"
 	 Physijs.scripts.ammo = "ammo.js"
 
@@ -40,95 +45,6 @@
 	 // CAMERA
 	 let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 )
 
-	 let camera_controls = new THREE.PointerLockControls(camera)
-
-	 scene.add(camera_controls.getObject())
-
-	 camera_controls.getObject().position.set(5,5,5)
-
-	 let havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document
-
-
-	 if (havePointerLock) {
-	     console.log("can pointer lock")
-
-	     let element = document.body;
-
-	     const pointerlockchange = function ( event ) {
-
-		 if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-
-		     camera_controls.enabled = true;
-
-		 } else {
-
-		     camera_controls.enabled = false;
-		 }
-
-	    };
-
-	     // Hook pointer lock state change events
-	     document.addEventListener( 'pointerlockchange', pointerlockchange, false )
-	     document.addEventListener( 'mozpointerlockchange', pointerlockchange, false )
-	     document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false )
-
-	     element.addEventListener( 'click', function ( event ) {
-
-		 // Ask the browser to lock the pointer
-		 element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-		 element.requestPointerLock();
-
-	     }, false )
-
-	 }
-
-	 var onKeyDown = function ( event ) {
-		 switch ( event.keyCode ) {
-			 case 38: // up
-			 case 87: // w
-				 moveForward = true;
-				 break;
-			 case 37: // left
-			 case 65: // a
-				 moveLeft = true; break;
-			 case 40: // down
-			 case 83: // s
-				 moveBackward = true;
-				 break;
-			 case 39: // right
-			 case 68: // d
-				 moveRight = true;
-				 break;
-			 case 32: // space
-				 if ( canJump === true ) velocity.y += 350;
-				 canJump = false;
-				 break;
-		 }
-	 };
-
-	 var onKeyUp = function ( event ) {
-		 switch( event.keyCode ) {
-			 case 38: // up
-			 case 87: // w
-				 moveForward = false;
-				 break;
-			 case 37: // left
-			 case 65: // a
-				 moveLeft = false;
-				 break;
-			 case 40: // down
-			 case 83: // s
-				 moveBackward = false;
-				 break;
-			 case 39: // right
-			 case 68: // d
-				 moveRight = false;
-				 break;
-		 }
-	 };
-
-	 document.addEventListener( 'keydown', onKeyDown, false );
-	 document.addEventListener( 'keyup', onKeyUp, false );
 
 	 // RENDERER
 	 let renderer = new THREE.WebGLRenderer()
@@ -197,21 +113,42 @@
 
 	 scene.add(plane)
 
-	 let box = new THREE.Mesh(new THREE.BoxGeometry(3,3,3), new THREE.MeshStandardMaterial({ color: 0x22aa22 }))
+	 let box = new Physijs.BoxMesh(
+	     new THREE.BoxGeometry(3,3,3),
+	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aa22 }), 0.3,0.3), 0)
 
 	 box.castShadow = true
 	 box.position.set(0,5,0)
 	 scene.add(box)
 
 
+	 let camera_controls = new THREE.PointerLockControls(camera)
+	 
+	 setup_pointer_lock(() => {
+	     camera_controls.enabled = true;
+	 }, () => {
+	     camera_controls.enabled = false;
+	 });
+
+	 let player = new Player(
+	     new Physijs.CapsuleMesh(
+		 new THREE.CylinderGeometry(1,1,2,32),
+		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff}), 0.3, 0.3), 1),
+	     camera_controls)
+
+	 gameobjects.push(player)
+	 scene.add(player.model)
+
 	 // ORBIT CONTROLS
 	 /* let controls = new THREE.OrbitControls( camera, renderer.domElement )
-	  */
+	    scene.add(camera)*/
+	 
 	 // KEYBOARD
 	 let keyboard = new THREEx.KeyboardState()
 
 	 // ANIM LOOP
 	 const animate = () => {
+	     gameobjects.map(o => o.animate())
 	     renderer.render(scene, camera)
 	 }
 
@@ -219,10 +156,7 @@
 	 // ::::::::::::::::: UPDATE LOOP ::::::::::::::::::
 
 	 const update = () => {
-		 if ( moveForward ) camera_controls.getObject().translateZ(-moveSpeed)
-		 if ( moveBackward ) camera_controls.getObject().translateZ(moveSpeed)
-		 if ( moveLeft  ) camera_controls.getObject().translateX(-moveSpeed)
-		 if ( moveRight ) camera_controls.getObject().translateX(moveSpeed)
+	     gameobjects.map(o => o.update(keyboard, scene))
 	     scene.simulate()
 	 }
 
