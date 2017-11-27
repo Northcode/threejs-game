@@ -127,7 +127,7 @@
 		 Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aa22 }), 0.3,0.3), 0)
 
 	     ramp.castShadow = true
-	     ramp.rotation.set(deg_to_rad(36),0,0)
+	     ramp.rotation.set(deg_to_rad(36),deg_to_rad(180),0)
 	     ramp.position.set(8,3,8)
 	     ramp.translateY(-0.5)
 	     scene.add(ramp)
@@ -148,6 +148,30 @@
 	 box3.castShadow = true
 	 box3.position.set(8,3,-24)
 	 scene.add(box3)
+
+	 let box4 = new Physijs.BoxMesh(
+	     new THREE.BoxGeometry(8,6,8),
+	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0xaa2222 }), 0.3,0.3), 0)
+
+	 box4.castShadow = true
+	 box4.position.set(8,9,16)
+	 scene.add(box4)
+
+	 let box5 = new Physijs.BoxMesh(
+	     new THREE.BoxGeometry(6,1,6),
+	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aaaa }), 0.3,0.3), 0)
+
+	 box5.castShadow = true
+	 box5.position.set(0,8,8)
+	 scene.add(box5)
+
+	 let box6 = new Physijs.BoxMesh(
+	     new THREE.BoxGeometry(8,0.5,8),
+	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aaaa }), 0.3,0.3), 0)
+
+	 box6.castShadow = true
+	 box6.position.set(0,5.75,-8)
+	 scene.add(box6)
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
 

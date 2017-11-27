@@ -3,7 +3,7 @@ class Player extends GameObject
     constructor(controls) {
 	super()
 	this.model = new Physijs.CapsuleMesh(
-	    new THREE.CylinderGeometry(1,1,2,32),
+	    new THREE.CylinderGeometry(1,1,4,32),
 	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1)
 	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 	this.model.castShadow = true
@@ -48,12 +48,11 @@ class Player extends GameObject
 
 	if (keyboard.pressed("space")) {
 
-	    let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 2 )
+	    let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 2.2 )
 	    raycaster.ray.origin.copy( this.model.position )
 	    let intersections = raycaster.intersectObjects( scene.children )
 
 	    if (intersections.length > 0) {
-		console.log("Jump!");
 		new_velocity.y = this.jumppower
 	    }
 	}
