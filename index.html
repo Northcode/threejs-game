@@ -106,7 +106,7 @@
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
 
-	 let plane = new Physijs.BoxMesh(new THREE.BoxGeometry(80,80,5),
+	 let plane = new Physijs.BoxMesh(new THREE.BoxGeometry(80,80,10),
 					   new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
 	 plane.receiveShadow = true
 	 plane.rotation.set(deg_to_rad(270), 0,0)
@@ -134,7 +134,7 @@
 	 let player = new Player(
 	     new Physijs.CapsuleMesh(
 		 new THREE.CylinderGeometry(1,1,2,32),
-		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0.3}), 0.3, 0.3), 4),
+		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 4),
 	     camera_controls)
 
 	 gameobjects.push(player)
