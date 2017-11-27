@@ -21,16 +21,10 @@
 	<script src="GameObject.js"></script>
 	<script src="player.js"></script>
 	<script>
-
 	 'use strict'
 
 	 const shadowMapRes = 4096
-
 	 const deg_to_rad = (deg) => deg * (Math.PI / 180)
-
-	 let moveForward, moveBackward, moveLeft, moveRight
-
-	 let moveSpeed = 0.5
 
 	 let gameobjects = []
 
@@ -39,12 +33,11 @@
 
 	 // SCENE
 	 let scene = new Physijs.Scene
-	 scene.setGravity(new THREE.Vector3(0,-30,0))
+	 scene.setGravity(new THREE.Vector3(0,-9.81,0))
 	 scene.background = new THREE.Color(0x3d8dcc)
 
 	 // CAMERA
 	 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
-
 
 	 // RENDERER
 	 let renderer = new THREE.WebGLRenderer()
@@ -100,8 +93,6 @@
 	 scene.add(light)
 	 scene.add(ambient)
 
-	 // camera.position.set(5,5,5)
-
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
@@ -110,18 +101,17 @@
 					   new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
 	 plane.receiveShadow = true
 	 plane.rotation.set(deg_to_rad(270), 0,0)
-	 plane.position.set(0,-10,0)
+	 plane.position.set(0,-5,0)
 
 	 scene.add(plane)
 
 	 let box = new Physijs.BoxMesh(
-	     new THREE.BoxGeometry(3,3,3),
+	     new THREE.BoxGeometry(8,6,8),
 	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aa22 }), 0.3,0.3), 0)
 
 	 box.castShadow = true
-	 box.position.set(0,5,0)
+	 box.position.set(5,3,0)
 	 scene.add(box)
-
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
 
@@ -131,13 +121,9 @@
 	     camera_controls.enabled = false;
 	 });
 
-	 let player = new Player(
-	     new Physijs.CapsuleMesh(
-		 new THREE.CylinderGeometry(1,1,2,32),
-		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 4),
-	     camera_controls)
-
+	 let player = new Player(camera_controls)
 	 gameobjects.push(player)
+	 player.model.position.set(0,1,0)
 	 scene.add(player.model)
 
 	 // ORBIT CONTROLS

@@ -1,15 +1,17 @@
 class Player extends GameObject
 {
-    constructor(model, controls) {
+    constructor(controls) {
 	super()
-	model.setAngularFactor(new THREE.Vector3(0,0,0))
-	this.model = model
+	this.model = new Physijs.CapsuleMesh(
+	    new THREE.CylinderGeometry(1,1,2,32),
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 4)
+	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 	this.model.castShadow = true
 	this.controls = controls
 	this.model.add(controls.getObject())
 	this.movespeed = 10
 	this.sprintspeed = 20
-	this.jumppower = 30
+	this.jumppower = 6.5
 
     }
 
@@ -20,7 +22,7 @@ class Player extends GameObject
 	let old_velocity = this.model.getLinearVelocity()
 	let current_speed = Math.sqrt(Math.pow(old_velocity.x, 2) + Math.pow(old_velocity.z,2))
 	let new_velocity = new THREE.Vector3(0,0,0)
-	let cur_mov_speed
+	let cur_mov_speed = 0
 
 	if (keyboard.pressed("shift")) {
 	    cur_mov_speed = this.sprintspeed
