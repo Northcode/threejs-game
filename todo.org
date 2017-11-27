@@ -1,1 +1,9 @@
-* Shit todo 
+* Shit todo
+DONE: Player movement
+TODO: Level structure
+TODO: Enemies
+TODO: Pickuppables
+TODO: Build bridge / stairs / watever
+TODO: Combat system
+TODO: HUD
+TODO: Music
