@@ -43,7 +43,7 @@
 	 scene.background = new THREE.Color(0x3d8dcc)
 
 	 // CAMERA
-	 let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 )
+	 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
 
 
 	 // RENDERER
@@ -106,7 +106,7 @@
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
 
-	 let plane = new Physijs.BoxMesh(new THREE.BoxGeometry(10,10,10),
+	 let plane = new Physijs.BoxMesh(new THREE.BoxGeometry(80,80,5),
 					   new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
 	 plane.receiveShadow = true
 	 plane.rotation.set(deg_to_rad(270), 0,0)
@@ -124,7 +124,7 @@
 
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
-	 
+
 	 setup_pointer_lock(() => {
 	     camera_controls.enabled = true;
 	 }, () => {
@@ -134,7 +134,7 @@
 	 let player = new Player(
 	     new Physijs.CapsuleMesh(
 		 new THREE.CylinderGeometry(1,1,2,32),
-		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff}), 0.3, 0.3), 2),
+		 Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0.3}), 0.3, 0.3), 4),
 	     camera_controls)
 
 	 gameobjects.push(player)
@@ -143,7 +143,7 @@
 	 // ORBIT CONTROLS
 	 /* let controls = new THREE.OrbitControls( camera, renderer.domElement )
 	    scene.add(camera)*/
-	 
+
 	 // KEYBOARD
 	 let keyboard = new THREEx.KeyboardState()
 
