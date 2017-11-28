@@ -35,6 +35,7 @@ const is_num = (n) => !isNaN(parseFloat(n)) && isFinite(n)
 // ------------------------- LOADER CODE --------------------
 let texLoader = new THREE.TextureLoader()
 let jloader = new THREE.JSONLoader()
+let oloader = new THREE.ObjectLoader()
 
 const load_file = (model_f, tex_f) => {
     return new Promise((resolve,reject) => {
@@ -50,6 +51,14 @@ const load_file = (model_f, tex_f) => {
 const load_geometry = (model_f) => {
     return new Promise((resolve,reject) => {
 	jloader.load(model_f, (geometry, mats) => {
+	    resolve(geometry)
+	})
+    }, (prog) => {}, (err) => reject(err))
+}
+
+const load_object = (model_f) => {
+    return new Promise((resolve,reject) => {
+	oloader.load(model_f, (geometry) => {
 	    resolve(geometry)
 	})
     }, (prog) => {}, (err) => reject(err))

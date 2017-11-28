@@ -102,6 +102,7 @@ class ZombiePart extends Part
 	let zombie = new Zombie()
 	zombie.model.position.copy(get_grid_pos(this.x, this.y, this.z))
 	zombie.model.castShadow = true
+	zombie.spawnpoint.copy(zombie.model.position)
 
 	gameobjects.push(zombie)
 	scene.add(zombie.model)

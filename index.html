@@ -20,6 +20,7 @@
 	<script src="util.js"></script>
 	<script src="GameObject.js"></script>
 	<script src="player.js"></script>
+	<script src="Enemies.js"></script>
 	<script src="map.js"></script>
 	<script>
 	 'use strict'
@@ -99,7 +100,7 @@
 	 scene.add(light)
 	 /* scene.add(light2)*/
 	 scene.add(ambient)
-	 
+
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
@@ -118,7 +119,7 @@
 ########
 1
 ########
-# <##  #
+#Z<##  #
 # S    #
 #      #
 #      #
@@ -149,11 +150,11 @@
 #  .   #
 #  .   #
 #   .  #
-##>    #
+##>Z   #
 #     _#
 ########
 	     `,
-	     scene, (startpos) => player_startpos = startpos)
+	     scene, gameobjects, (startpos) => player_startpos = startpos)
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
 
