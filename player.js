@@ -1,10 +1,9 @@
-class Player extends GameObject
+class Player extends GameUnit
 {
     constructor(controls) {
-	super()
-	this.model = new Physijs.CapsuleMesh(
+	super(new Physijs.CapsuleMesh(
 	    new THREE.CylinderGeometry(1,1,4,32),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1)
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
 	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 	this.model.castShadow = true
 	this.controls = controls
@@ -15,51 +14,30 @@ class Player extends GameObject
 
     }
 
+    updateMatrix() {
+	this.rotationMatrix = this.controls.getObject().matrix
+    }
+
     update(keyboard, scene) {
-	super.update(keyboard, scene)
-
-	let rotMatrix = this.controls.getObject().matrix
-	let old_velocity = this.model.getLinearVelocity()
-	let current_speed = Math.sqrt(Math.pow(old_velocity.x, 2) + Math.pow(old_velocity.z,2))
-	let new_velocity = new THREE.Vector3(0,0,0)
-	let cur_mov_speed = 0
-
 	if (keyboard.pressed("shift")) {
-	    cur_mov_speed = this.sprintspeed
-	}else {
-	    cur_mov_speed = this.movespeed
+	    this.sprint()
 	}
-
 	if (keyboard.pressed("W")) {
-	    new_velocity.z = -cur_mov_speed
+	    this.forward()
 	}
 	if (keyboard.pressed("S")) {
-	    new_velocity.z = cur_mov_speed
+	    this.backward()
 	}
 	if (keyboard.pressed("A")) {
-	    new_velocity.x = -cur_mov_speed
+	    this.left()
 	}
 	if (keyboard.pressed("D")) {
-	    new_velocity.x = cur_mov_speed
+	    this.right()
 	}
-
-	new_velocity.applyMatrix4(rotMatrix)
-	new_velocity.y = old_velocity.y
-
-	let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 2.2 )
-	raycaster.ray.origin.copy( this.model.position )
-	let intersections = raycaster.intersectObjects( scene.children )
-
-
 	if (keyboard.pressed("space")) {
-
-	    if (intersections.length > 0) {
-		new_velocity.y = this.jumppower
-	    }
+	    this.jump()
 	}
 
-	let tot_speed = new THREE.Vector3()
-	this.model.setLinearVelocity(new_velocity)
-	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
+	super.update(keyboard, scene)
     }
 }
