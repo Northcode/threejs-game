@@ -56,7 +56,7 @@ class Platform extends Part
     }
 }
 
-let stairP = load_geometry("stairs.json")
+let stairP = load_geometry("assets/models/stairs.json")
 
 class Stairs extends Part
 {
@@ -116,7 +116,7 @@ const generate_map_from = (str,scene,startpos_f) => {
     let x = 0,y = 0,z = 0
 
     let width = 0, height = 0
-    
+
     for (const line of lines) {
 	if (is_num(line[0])) {
 	    if (z > 0) {
