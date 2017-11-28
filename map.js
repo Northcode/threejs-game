@@ -48,10 +48,24 @@ class Platform extends Part
     build(scene) {
 	let box = new Physijs.BoxMesh(
 	    new THREE.BoxGeometry(6,1,6),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aaaa }), 0.3,0.3), 0)
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
 
 	box.castShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
+	scene.add(box)
+    }
+}
+
+class SmallPlatform extends Part
+{
+    build(scene) {
+	let box = new Physijs.BoxMesh(
+	    new THREE.BoxGeometry(3,0.5,3),
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+
+	box.castShadow = true
+	box.position.copy(get_grid_pos(this.x,this.y,this.z))
+	box.position.y -= 3.25
 	scene.add(box)
     }
 }
@@ -88,6 +102,10 @@ const generate_block = (x,y,z, chr, scene) => {
     } break
     case '-': {
 	let part = new Platform(x,y,z, 0x22aaaa)
+	part.build(scene)
+    } break
+    case '.': {
+	let part = new SmallPlatform(x,y,z, 0x2222dd)
 	part.build(scene)
     } break
     case '<': {
