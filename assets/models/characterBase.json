@@ -30,7 +30,7 @@
             "matrix":[-0.125,0,0,0,0,0,0.125,0,0,0.125,0,0,-0.375,0.375,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"2691BC81-CAA2-4440-BDC8-F3B13EDD09C3"
         },{
@@ -39,7 +39,7 @@
             "matrix":[-0.25,0,0,0,0,0,0.25,0,0,0.25,0,0,0,0.75,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"7EAEDF04-155E-446D-83CB-6ACBF64A2C17"
         },{
@@ -48,7 +48,7 @@
             "matrix":[-0.25,0,0,0,0,0,0.125,0,0,0.375,0,0,0,0.125,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"EF296506-B126-4336-9C3B-2B60CE64058C"
         },{
@@ -57,7 +57,7 @@
             "matrix":[-0.125,0,0,0,0,0,0.125,0,0,0.005,0,0,0.125,-0.25,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"B8FAF8AD-AE31-40FF-AC0E-AD994997A133"
         },{
@@ -66,7 +66,7 @@
             "matrix":[-0.125,0,0,0,0,0,0.125,0,0,0.005,0,0,-0.125,-0.25,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"C3460897-FD79-474E-BFAB-B13944087961"
         },{
@@ -75,7 +75,7 @@
             "matrix":[-0.125,0,0,0,0,0,0.125,0,0,0.125,0,0,0.375,0.375,0,1],
             "visible":true,
             "type":"Mesh",
-            "castShadow":false,
+            "castShadow":true,
             "receiveShadow":false,
             "geometry":"7701461B-D54D-4978-B726-07222DA1F726"
         }]

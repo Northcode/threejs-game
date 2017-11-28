@@ -10,6 +10,7 @@ class Zombie extends GameUnit
 				geometry,
 				new THREE.MeshStandardMaterial({ color: 0xffffff })
 			)*/
+			object.scale.set(2,2,2)
 			this.model.add(object)
 		})
 		this.movespeed = 10
