@@ -9,3 +9,9 @@ class GameObject
     update(keyboard, scene) {
     }
 }
+
+
+class GameUnit extends GameObject
+{
+
+}
