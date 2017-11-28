@@ -52,7 +52,6 @@
 	 renderer.gammaInput = true
 	 renderer.gammaOutput = true
 
-
 	 // LIGHTING
 	 let light = new THREE.DirectionalLight(0x999999, 1, 100)
 	 light.position.set(60,60,30)
@@ -83,75 +82,6 @@
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
-
-	 /* let plane = new Physijs.BoxMesh(new THREE.BoxGeometry(80,80,10),
-	    new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
-	    plane.receiveShadow = true
-	    plane.rotation.set(deg_to_rad(270), 0,0)
-	    plane.position.set(0,-5,0)
-
-	    scene.add(plane)
-
-	    let box = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(8,6,8),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aa22 }), 0.3,0.3), 0)
-
-	    box.castShadow = true
-	    box.position.set(8,3,0)
-	    scene.add(box)
-
-	    load_geometry("stairs.json").then(geometry => {
-	    let ramp = new Physijs.BoxMesh(
-	    geometry,
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aa22 }), 0.3,0.3), 0)
-
-	    ramp.castShadow = true
-	    ramp.rotation.set(deg_to_rad(36),deg_to_rad(180),0)
-	    ramp.position.set(8,3,8)
-	    ramp.translateY(-0.5)
-	    scene.add(ramp)
-	    })
-
-	    let box2 = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(8,6,8),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0xaa2222 }), 0.3,0.3), 0)
-
-	    box2.castShadow = true
-	    box2.position.set(-8,3,0)
-	    scene.add(box2)
-
-	    let box3 = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(8,6,8),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0xaa2222 }), 0.3,0.3), 0)
-
-	    box3.castShadow = true
-	    box3.position.set(8,3,-24)
-	    scene.add(box3)
-
-	    let box4 = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(8,6,8),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0xaa2222 }), 0.3,0.3), 0)
-
-	    box4.castShadow = true
-	    box4.position.set(8,9,16)
-	    scene.add(box4)
-
-	    let box5 = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(6,1,6),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aaaa }), 0.3,0.3), 0)
-
-	    box5.castShadow = true
-	    box5.position.set(0,8,8)
-	    scene.add(box5)
-
-	    let box6 = new Physijs.BoxMesh(
-	    new THREE.BoxGeometry(8,0.5,8),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x22aaaa }), 0.3,0.3), 0)
-
-	    box6.castShadow = true
-	    box6.position.set(0,5.75,-8)
-	    scene.add(box6)
-	  */
 
 	 let player_startpos = new THREE.Vector3(16,30,16)
 
@@ -212,7 +142,6 @@
 	     renderer.render(scene, camera)
 	 }
 
-
 	 // ::::::::::::::::: UPDATE LOOP ::::::::::::::::::
 
 	 const update = () => {
@@ -226,14 +155,6 @@
 	 //
 	 // :::::::::::::: UTIL FUNCTIONS ::::::::::::::::::::
 	 //
-
-	 const draw_vec = (vec) => {
-	     let arr = new THREE.ArrowHelper(vec.clone().normalize(),
-					     new THREE.Vector3(0,0,0),
-					     vec.length(),
-					     0x00ff00)
-	     scene.add(arr)
-	 }
 
 	 let animLoop = new THREEx.RenderingLoop()
 	 let physLoop = new THREEx.PhysicsLoop(60)

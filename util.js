@@ -54,3 +54,11 @@ const load_geometry = (model_f) => {
 	})
     }, (prog) => {}, (err) => reject(err))
 }
+
+const draw_vec = (vec) => {
+    let arr = new THREE.ArrowHelper(vec.clone().normalize(),
+				    new THREE.Vector3(0,0,0),
+				    vec.length(),
+				    0x00ff00)
+    scene.add(arr)
+}

@@ -77,7 +77,6 @@ class Stairs extends Part
 }
 
 const generate_block = (x,y,z, chr, scene) => {
-    console.log("building: " + chr + " at: " + x + "," + y + "," + z)
     switch (chr) {
     case '#': {
 	let part = new Block(x,y,z, 0x22aa00)
@@ -126,7 +125,6 @@ const generate_map_from = (str,scene,startpos_f) => {
 	    x = 0
 	    z = 0
 	} else {
-	    console.log("building line: " + line)
 	    width = line.length * 8
 	    for (const c of line) {
 		if (c == "S") {
