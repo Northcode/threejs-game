@@ -11,7 +11,6 @@ class Player extends GameUnit
 	this.movespeed = 10
 	this.sprintspeed = 20
 	this.jumppower = 15
-
     }
 
     updateMatrix() {

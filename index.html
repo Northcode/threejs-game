@@ -135,7 +135,8 @@
 
 	 let player = new Player(camera_controls)
 	 gameobjects.push(player)
-	 player.model.position.copy(player_startpos)
+	 player.spawnpoint = player_startpos
+	 player.respawn()
 	 scene.add(player.model)
 
 	 // ORBIT CONTROLS

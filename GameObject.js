@@ -29,6 +29,8 @@ class GameUnit extends GameObject
 	}
 	this.rotationMatrix = new THREE.Matrix4()
 	this.model = model
+	this.killplane = -10
+	this.spawnpoint = new THREE.Vector3(0,30,0)
     }
 
     forward() {
@@ -59,6 +61,11 @@ class GameUnit extends GameObject
 	return this.movement.forward || this.movement.backward || this.movement.left || this.movement.right
     }
 
+    respawn() {
+	this.model.position.copy(this.spawnpoint)
+	this.model.__dirtyPosition = true
+    }
+
     updateMatrix() {
 	return undefined
     }
@@ -71,6 +78,10 @@ class GameUnit extends GameObject
 	let old_velocity = this.model.getLinearVelocity()
 	this.movement.velocity.set(0,0,0)
 	let cur_mov_speed = 0
+
+	if (this.model.position.y < this.killplane) {
+	    this.respawn()
+	}
 
 	if (this.movement.sprinting) {
 	    cur_mov_speed = this.sprintspeed
