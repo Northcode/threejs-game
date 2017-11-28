@@ -85,6 +85,7 @@ class GameUnit extends GameObject
 
 	if (this.movement.sprinting) {
 	    cur_mov_speed = this.sprintspeed
+	    this.movement.sprinting = false
 	}else {
 	    cur_mov_speed = this.movespeed
 	}
