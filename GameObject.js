@@ -107,6 +107,11 @@ class GameUnit extends GameObject
 	    this.movement.right = false
 	}
 
+	if (this.movement.velocity.length() > cur_mov_speed) {
+	    this.movement.velocity.multiplyScalar(0.7071)
+	    console.log(this.movement.velocity)
+	}
+
 	this.movement.velocity.applyMatrix4(this.rotationMatrix)
 	this.movement.velocity.y = old_velocity.y
 	
