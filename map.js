@@ -96,7 +96,19 @@ class Stairs extends Part
     }
 }
 
-const generate_block = (x,y,z, chr, scene) => {
+class ZombiePart extends Part
+{
+    build(scene,gameobjects) {
+	let zombie = new Zombie()
+	zombie.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+	zombie.model.castShadow = true
+
+	gameobjects.push(zombie)
+	scene.add(zombie.model)
+    }
+}
+
+const generate_block = (x,y,z, chr, scene, gameobjects) => {
     switch (chr) {
     case '#': {
 	let part = new Block(x,y,z, 0x22aa00)
@@ -130,10 +142,14 @@ const generate_block = (x,y,z, chr, scene) => {
 	let part = new Stairs(x,y,z, 0xaa2222)
 	part.build(scene,0)
     } break
+    case 'Z': {
+	let part = new ZombiePart(x,y,z, 0xaa2222)
+	part.build(scene,gameobjects)
+    } break
     }
 }
 
-const generate_map_from = (str,scene,startpos_f) => {
+const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 
     let lines = str.split("\n")
     let x = 0,y = 0,z = 0
@@ -154,7 +170,7 @@ const generate_map_from = (str,scene,startpos_f) => {
 		if (c == "S") {
 		    startpos_f(get_grid_pos(x,y,z))
 		} else {
-		    generate_block(x,y,z, c, scene)
+		    generate_block(x,y,z, c, scene, gameobjects)
 		}
 		x += 1
 	    }
