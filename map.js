@@ -101,11 +101,11 @@ const generate_block = (x,y,z, chr, scene) => {
     } break
     case '^': {
 	let part = new Stairs(x,y,z, 0xaa2222)
-	part.build(scene,0)
+	part.build(scene,180)
     } break
     case 'v': {
 	let part = new Stairs(x,y,z, 0xaa2222)
-	part.build(scene,180)
+	part.build(scene,0)
     } break
     }
 }
