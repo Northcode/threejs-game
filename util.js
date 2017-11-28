@@ -28,3 +28,29 @@ const setup_pointer_lock = function(onlock,onunlock) {
 
     }
 }
+
+
+const is_num = (n) => !isNaN(parseFloat(n)) && isFinite(n)
+
+// ------------------------- LOADER CODE --------------------
+let texLoader = new THREE.TextureLoader()
+let jloader = new THREE.JSONLoader()
+
+const load_file = (model_f, tex_f) => {
+    return new Promise((resolve,reject) => {
+	jloader.load(model_f, (geometry, mats) => {
+	    texLoader.load(tex_f, (texture) => {
+		let mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({map: texture, flatShading: true, shininess: 0, specular: 0x000, morphTargets: true, vertexColors: THREE.FaceColors }) )
+		resolve(mesh)
+	    }, (progress) => {}, (error) => reject(error))
+	})
+    }, (prog) => {}, (err) => reject(err))
+}
+
+const load_geometry = (model_f) => {
+    return new Promise((resolve,reject) => {
+	jloader.load(model_f, (geometry, mats) => {
+	    resolve(geometry)
+	})
+    }, (prog) => {}, (err) => reject(err))
+}
