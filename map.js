@@ -23,8 +23,14 @@ class Block extends Part
 	     new THREE.BoxGeometry(8,6,8),
 	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
 
-	box.castShadow = true
+	let shadowCaster = new THREE.Mesh(
+	    new THREE.BoxGeometry(7,5,7),
+	    new THREE.MeshBasicMaterial({ color: this.color }))
+
+	shadowCaster.castShadow = true
+	box.receiveShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
+	box.add(shadowCaster)
 	scene.add(box)
     }
 }
@@ -156,11 +162,11 @@ const generate_map_from = (str,scene,startpos_f) => {
 	    z += 1
 	}
     }
-    let floor = new Physijs.BoxMesh(new THREE.BoxGeometry(height,width + 16,10),
-				    new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
-    floor.receiveShadow = true
-    floor.rotation.set(deg_to_rad(270), 0,0)
-    floor.position.set(height / 2 - 4,-5,width / 2 + 4)
+    // let floor = new Physijs.BoxMesh(new THREE.BoxGeometry(height,width + 16,10),
+    // 				    new THREE.MeshStandardMaterial({color: 0x2222aa }),0)
+    // floor.receiveShadow = true
+    // floor.rotation.set(deg_to_rad(270), 0,0)
+    // floor.position.set(height / 2 - 4,-5,width / 2 + 4)
 
-    scene.add(floor)
+    // scene.add(floor)
 }
