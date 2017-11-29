@@ -16,4 +16,10 @@ class Zombie extends GameUnit
 		this.movespeed = 10
 
 	}
+	die(){
+		if (!this.isDead) {
+			setTimeout(this.respawn.bind(this), 5000)
+			this.isDead = true
+		}
+	}
 }

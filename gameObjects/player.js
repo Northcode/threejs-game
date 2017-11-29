@@ -12,6 +12,8 @@ class Player extends GameUnit
 		this.sprintspeed = 20
 		this.jumppower = 15
 
+		this.lives = 5
+
 		this.hitbar = document.getElementById("health")
 	}
 
@@ -20,9 +22,15 @@ class Player extends GameUnit
 		this.hitbar.value = this.hp
 	}
 
+	die(){
+		this.lives -= 1
+		super.die()
+	}
+
 	respawn(){
 		super.respawn()
 		this.hitbar.value = this.hp
+		document.getElementById("lives").innerHTML = "Lives: " + this.lives;
 	}
 
     updateMatrix() {

@@ -32,6 +32,7 @@ class GameUnit extends GameObject
 	this.killplane = -10
 	this.spawnpoint = new THREE.Vector3(0,30,0)
 	this.hp = 100
+	this.isDead = false
     }
 
     forward() {
@@ -65,11 +66,17 @@ class GameUnit extends GameObject
 	takeDamage(damage){
 		this.hp -= damage
 		if (this.hp <= 0) {
-			this.respawn()
+			this.die()
 		}
 	}
 
+	die(){
+		this.isDead = true
+		this.respawn()
+	}
+
 	respawn() {
+		this.isDead = false
 		this.hp = 100
 		this.model.position.copy(this.spawnpoint)
 		this.model.__dirtyPosition = true
@@ -89,7 +96,7 @@ class GameUnit extends GameObject
 	let cur_mov_speed = 0
 
 	if (this.model.position.y < this.killplane) {
-	    this.respawn()
+	    this.die()
 	}
 
 	if (this.movement.sprinting) {
