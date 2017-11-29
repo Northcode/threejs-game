@@ -6,6 +6,8 @@ TODO: Level structure
 TODO: Enemies
  - DONE: Enemy model and animation
  - TODO: Texture
+ - TODO: Movement
+ - TODO: Combat logic
 TODO: Pickuppables
 TODO: Build bridge / stairs / watever
 TODO: Combat system
