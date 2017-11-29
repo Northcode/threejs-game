@@ -1,42 +1,58 @@
 class Player extends GameUnit
 {
-    constructor(controls) {
-	super(new Physijs.CapsuleMesh(
-	    new THREE.CylinderGeometry(1,1,4,32),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
-	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
-	this.model.castShadow = true
-	this.controls = controls
-	this.model.add(controls.getObject())
-	this.movespeed = 10
-	this.sprintspeed = 20
-	this.jumppower = 15
-    }
+	constructor(controls) {
+		super(new Physijs.CapsuleMesh(
+			new THREE.CylinderGeometry(1,1,4,32),
+			Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
+		this.model.setAngularFactor(new THREE.Vector3(0,0,0))
+		this.model.castShadow = true
+		this.controls = controls
+		this.model.add(controls.getObject())
+		this.movespeed = 10
+		this.sprintspeed = 20
+		this.jumppower = 15
+
+		this.hitbar = document.getElementById("health")
+	}
+
+	takeDamage(damage){
+		super.takeDamage(damage)
+		this.hitbar.value = this.hp
+	}
+
+	respawn(){
+		super.respawn()
+		this.hitbar.value = this.hp
+	}
 
     updateMatrix() {
-	this.rotationMatrix = this.controls.getObject().matrix
+		this.rotationMatrix = this.controls.getObject().matrix
     }
 
     update(keyboard, scene) {
-	if (keyboard.pressed("shift")) {
-	    this.sprint()
-	}
-	if (keyboard.pressed("W")) {
-	    this.forward()
-	}
-	if (keyboard.pressed("S")) {
-	    this.backward()
-	}
-	if (keyboard.pressed("A")) {
-	    this.left()
-	}
-	if (keyboard.pressed("D")) {
-	    this.right()
-	}
-	if (keyboard.pressed("space")) {
-	    this.jump()
-	}
+		if (keyboard.pressed("shift")) {
+			this.sprint()
+		}
+		if (keyboard.pressed("W")) {
+			this.forward()
+		}
+		if (keyboard.pressed("S")) {
+			this.backward()
+		}
+		if (keyboard.pressed("A")) {
+			this.left()
+		}
+		if (keyboard.pressed("D")) {
+			this.right()
+		}
+		if (keyboard.pressed("space")) {
+			this.jump()
+		}
 
-	super.update(keyboard, scene)
+		if (keyboard.pressed("M")) {
+			this.takeDamage(10)
+		}
+
+		super.update(keyboard, scene)
     }
 }

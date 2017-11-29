@@ -2,7 +2,7 @@ class GameObject
 {
     constructor() {
     }
-    
+
     animate() {
     }
 
@@ -31,6 +31,7 @@ class GameUnit extends GameObject
 	this.model = model
 	this.killplane = -10
 	this.spawnpoint = new THREE.Vector3(0,30,0)
+	this.hp = 100
     }
 
     forward() {
@@ -61,10 +62,18 @@ class GameUnit extends GameObject
 	return this.movement.forward || this.movement.backward || this.movement.left || this.movement.right
     }
 
-    respawn() {
-	this.model.position.copy(this.spawnpoint)
-	this.model.__dirtyPosition = true
-    }
+	takeDamage(damage){
+		this.hp -= damage
+		if (this.hp <= 0) {
+			this.respawn()
+		}
+	}
+
+	respawn() {
+		this.hp = 100
+		this.model.position.copy(this.spawnpoint)
+		this.model.__dirtyPosition = true
+	}
 
     updateMatrix() {
 	return undefined
@@ -113,7 +122,7 @@ class GameUnit extends GameObject
 
 	this.movement.velocity.applyMatrix4(this.rotationMatrix)
 	this.movement.velocity.y = old_velocity.y
-	
+
 	let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 3 )
 	raycaster.ray.origin.copy( this.model.position )
 	let intersections = raycaster.intersectObjects( scene.children )
