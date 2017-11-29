@@ -132,9 +132,8 @@ class GameUnit extends GameObject
 	}
 	this.movement.jump = false
 
-	let tot_speed = new THREE.Vector3()
 	this.model.setLinearVelocity(this.movement.velocity)
-	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
+	this.model.setAngularFactor(zero_vec)
 
     }
 }

@@ -71,3 +71,7 @@ const draw_vec = (vec) => {
 				    0x00ff00)
     scene.add(arr)
 }
+
+
+const zero_vec = new THREE.Vector3(0,0,0)
+const ident_vec = new THREE.Vector3(1,1,1)
