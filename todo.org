@@ -1,17 +1,17 @@
 * Shit todo
-DONE: Player movement
-TODO: Level structure
- - DONE: Level generation
- - TODO: Build first and second level (third?)
-TODO: Enemies
- - DONE: Enemy model and animation
- - TODO: Texture
- - TODO: Movement
- - TODO: Combat logic
-TODO: Pickuppables
-TODO: Build bridge / stairs / watever
-TODO: Combat system
-TODO: HUD
-TODO: Music
- - TODO: Background music
- - TODO: Sound effects
+* DONE Player movement
+* TODO Level structure
+** DONE Level generation
+** TODO Build first and second level (third?)
+* TODO Enemies
+** DONE Enemy model and animation
+** TODO Texture
+** TODO Movement
+** TODO Combat logic
+* TODO Pickuppables
+* TODO Build bridge / stairs / watever
+* TODO Combat system
+* TODO HUD
+* TODO Music
+** TODO Background music
+** TODO Sound effects
