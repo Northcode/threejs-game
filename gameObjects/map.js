@@ -15,16 +15,30 @@ class Part
     }
 }
 
+class SizedPart extends Part
+{
+    constructor(x,y,z ,w,h,d, color) {
+	super(x,y,z,color)
+	this.w = w
+	this.h = h
+	this.d = d
+    }
 
-class Block extends Part
+    build(scene) {
+	return undefined
+    }
+}
+
+class Block extends SizedPart
 {
     build(scene) {
+	console.log ("building block of size: " + this.w + "," + this.h + "," + this.d + " at: " + this.x + "," + this.y + "," + this.z)
 	 let box = new Physijs.BoxMesh(
-	     new THREE.BoxGeometry(8,6,8),
+	     new THREE.BoxGeometry(8*this.w,6*this.h,8*this.d),
 	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
 
 	let shadowCaster = new THREE.Mesh(
-	    new THREE.BoxGeometry(7,5,7),
+	    new THREE.BoxGeometry(7*this.w,5*this.h,7*this.d),
 	    new THREE.MeshBasicMaterial({ color: this.color }))
 
 	shadowCaster.castShadow = true
@@ -108,11 +122,19 @@ class ZombiePart extends Part
     }
 }
 
+let lastblock = undefined
+
 const generate_block = (x,y,z, chr, scene, gameobjects) => {
+    let tmp = true
     switch (chr) {
     case '#': {
-	let part = new Block(x,y,z, 0x22aa00)
-	part.build(scene)
+	tmp = false
+	if (lastblock != undefined) {
+	    lastblock.w += 1
+	    lastblock.x += 0.5
+	} else {
+	    lastblock = new Block(x,y,z, 1,1,1, 0x22aa00)
+	}
     } break
     case '_': {
 	let part = new Roof(x,y,z, 0x22aaaa)
@@ -147,6 +169,10 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 	part.build(scene,gameobjects)
     } break
     }
+    if (tmp && lastblock != undefined) {
+	lastblock.build(scene)
+	lastblock = undefined
+    }
 }
 
 const generate_map_from = (str,scene, gameobjects,startpos_f) => {
@@ -165,6 +191,11 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 	    x = 0
 	    z = 0
 	} else {
+	    if (lastblock != undefined) {
+		lastblock.build(scene)
+		lastblock = undefined
+	    }
+	    lastblock = undefined
 	    width = line.length * 8
 	    for (const c of line) {
 		if (c == "S") {
