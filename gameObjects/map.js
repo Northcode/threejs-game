@@ -84,7 +84,7 @@ class Stairs extends Part
 	stairP.then(geometry => {
 	    let stair = new Physijs.BoxMesh(
 		geometry,
-		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 1,1), 0)
 
 	    stair.castShadow = true
 	    stair.rotation.set(deg_to_rad(36),deg_to_rad(180),0)
