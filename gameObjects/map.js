@@ -28,24 +28,32 @@ class SizedPart extends Part
 	return undefined
     }
 }
-
 class Block extends SizedPart
 {
     build(scene) {
 	// console.log ("building block of size: " + this.w + "," + this.h + "," + this.d + " at: " + this.x + "," + this.y + "," + this.z)
-	 let box = new Physijs.BoxMesh(
-	     new THREE.BoxGeometry(8*this.w,6*this.h,8*this.d),
-	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+	load_texture("assets/textures/brick.jpg").then(tex => {
 
-	let shadowCaster = new THREE.Mesh(
-	    new THREE.BoxGeometry(7*this.w,5*this.h,7*this.d),
-	    new THREE.MeshBasicMaterial({ color: this.color }))
+	    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+	    let ctex = tex
+	    ctex.clone(tex)
+	    
+	    ctex.repeat.set(this.w, 1)
+	    
+	    let box = new Physijs.BoxMesh(
+		new THREE.BoxGeometry(8*this.w,6*this.h,8*this.d),
+		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color, map: ctex }), 0.3,0.3), 0)
 
-	shadowCaster.castShadow = true
-	box.receiveShadow = true
-	box.position.copy(get_grid_pos(this.x,this.y,this.z))
-	box.add(shadowCaster)
-	scene.add(box)
+	    let shadowCaster = new THREE.Mesh(
+		new THREE.BoxGeometry(7*this.w,5*this.h,7*this.d),
+		new THREE.MeshBasicMaterial({ color: this.color }))
+
+	    shadowCaster.castShadow = true
+	    box.receiveShadow = true
+	    box.position.copy(get_grid_pos(this.x,this.y,this.z))
+	    box.add(shadowCaster)
+	    scene.add(box)
+	})
     }
 }
 

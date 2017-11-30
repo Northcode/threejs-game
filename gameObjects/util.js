@@ -56,6 +56,14 @@ const load_geometry = (model_f) => {
     }, (prog) => {}, (err) => reject(err))
 }
 
+const load_texture = (tex_f) => {
+    return new Promise((resolve,reject) => {
+	texLoader.load(tex_f, (texture) => {
+	    resolve(texture)
+	})
+    }, (prog) => {}, (err) => reject(err))
+}
+
 const load_object = (model_f) => {
     return new Promise((resolve,reject) => {
 	oloader.load(model_f, (geometry) => {
