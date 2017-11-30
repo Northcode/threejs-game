@@ -141,6 +141,8 @@
 	 let screenBlocker = document.getElementById('blocker')
 	 let instructions = document.getElementById('instructions')
 
+	 let paused = false
+
 	 let gameobjects = []
 
 	 Physijs.scripts.worker = "lib/physijs_worker.js"
@@ -275,11 +277,13 @@
 	     camera_controls.enabled = true;
 		 screenBlocker.style.display = 'none'
 	     scene.onSimulationResume()
+		 paused = false
 		 physLoop.start()
 	 }, () => {
 	     camera_controls.enabled = false;
 	     screenBlocker.style.display = 'blocker'
 	     instructions.style.display = 'instructions'
+		 paused = true
 	     physLoop.stop()
 	     console.log(physLoop.isRunning())
 	 });
@@ -301,8 +305,12 @@
 	 // ANIM LOOP
 	 const animate = () => {
 	     let delta = clock.getDelta()
+		 if (paused) {
+		 	delta = 0
+		}else {
+			TWEEN.update();
+		}
 	     gameobjects.map(o => o.animate(delta))
-	     TWEEN.update();
 	     renderer.render(scene, camera)
 	 }
 
