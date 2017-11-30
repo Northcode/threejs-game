@@ -17,15 +17,16 @@ class Player extends GameUnit
 		this.hitbar = document.getElementById("health")
 
 		load_object("assets/models/characterBase.json").then(object => {
-			/*let mesh = new THREE.Mesh(
-				geometry,
-				new THREE.MeshStandardMaterial({ color: 0xffffff })
-			)*/
-			this.animationMixer = new THREE.AnimationMixer( object )
+		    // let mesh = new THREE.Mesh(
+		    // 	geometry,
+		    // 	new THREE.MeshStandardMaterial({ color: 0xffffff })
+		    // )
+		    this.animationMixer = new THREE.AnimationMixer( object )
 		    object.position.set(0,-1.8,0)
-			object.scale.set(2,2,2)
-			this.object = object
-		    // this.controls.getObject().add(object)
+		    object.scale.set(2,2,2)
+		    object.material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0 })
+		    this.object = object
+		    this.controls.getObject().add(object)
 		})
 	}
 
@@ -53,6 +54,8 @@ class Player extends GameUnit
     }
 
     update(keyboard, scene) {
+	this.resetMovement()
+	
 		if (keyboard.pressed("shift")) {
 			this.sprint()
 		}

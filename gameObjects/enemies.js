@@ -26,7 +26,7 @@ class Zombie extends GameUnit
 	}
 
     update(keyboard, scene) {
-	super.update(keyboard, scene)
+	this.resetMovement()
 
 	this.rotationMatrix.extractRotation(this.model.matrix)
 	
@@ -35,5 +35,7 @@ class Zombie extends GameUnit
 	    this.lookAt(scene.player.model.position.clone())
 	    this.forward()
 	}
+
+	super.update(keyboard, scene)
     }
 }

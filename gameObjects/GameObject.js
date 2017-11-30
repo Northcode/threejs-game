@@ -113,6 +113,13 @@ class GameUnit extends GameObject
 	}
     }
 
+    resetMovement() {
+	this.movement.forward = false
+	this.movement.backward = false
+	this.movement.left = false
+	this.movement.right = false
+    }
+
     update(keyboard, scene) {
 	super.update(keyboard, scene)
 
@@ -135,19 +142,15 @@ class GameUnit extends GameObject
 
 	if (this.movement.forward) {
 	    this.movement.velocity.z = -cur_mov_speed
-	    this.movement.forward = false
 	}
 	if (this.movement.backward) {
 	    this.movement.velocity.z = cur_mov_speed
-	    this.movement.backward = false
 	}
 	if (this.movement.left) {
 	    this.movement.velocity.x = -cur_mov_speed
-	    this.movement.left = false
 	}
 	if (this.movement.right) {
 	    this.movement.velocity.x = cur_mov_speed
-	    this.movement.right = false
 	}
 
 	if (this.movement.velocity.length() > cur_mov_speed) {
@@ -172,6 +175,7 @@ class GameUnit extends GameObject
 	} else {
 	    this.model.setLinearVelocity(zero_vec)
 	}
+
 
     }
 }
