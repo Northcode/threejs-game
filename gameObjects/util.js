@@ -31,6 +31,7 @@ const setup_pointer_lock = function(onlock,onunlock) {
 
 
 const is_num = (n) => !isNaN(parseFloat(n)) && isFinite(n)
+const vec_to_str = (vec) => "{" + vec.x + "," + vec.y + "," + vec.z + "}"
 
 // ------------------------- LOADER CODE --------------------
 let texLoader = new THREE.TextureLoader()

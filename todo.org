@@ -6,7 +6,10 @@
 * TODO Enemies
 ** DONE Enemy model and animation
 ** TODO Texture
-** TODO Movement
+** Movement [/]
+*** DONE Basic 
+*** TODO Pathfinding
+** TODO Turrets
 ** TODO Combat logic
 * TODO Pickuppables
 * TODO Build bridge / stairs / watever

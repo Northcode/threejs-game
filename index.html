@@ -114,6 +114,7 @@
 		<script src="lib/PointerLockControls.js"></script>
 		<script src="gameObjects/util.js"></script>
 		<script src="gameObjects/GameObject.js"></script>
+		<script src="gameObjects/movables.js"></script>
 		<script src="gameObjects/player.js"></script>
 		<script src="gameObjects/enemies.js"></script>
 		<script src="gameObjects/items.js"></script>
@@ -225,54 +226,54 @@
 	 generate_map_from(
 	     `0
 ##########
+#####    #
+#####    #
+#   #    #
+#####    #
+#####    #
 ##########
-####   ###
-####   ###
-####   ###
-####   ###
-####   ###
-####   ###
+##########
 ##########
 ##########
 1
 ##########
-#Z     Z #
+#S# #   _#
+# # #    #
+# . #    #
+### #    #
+#   <_  _#
+# ########
 #        #
-##_      #
-##       #
-##       #
-##       #
-#v c     #
-# S      #
+#        #
 ##########
 2
 ##########
+#   #    #
+#   #.   #
+#   # #. #
+#   # #  #
+#  #  #> #
+##########
+#  M    N#
 #        #
-#        #
-#  - - _##
-#Z      ##
-#c      ##
-#__    _##
-#_       #
-#_       #
 ##########
 3
 ##########
-# ###    #
-#        #
-# c      #
-#       c#
-#---     #
-#   .c.  #
-#Z       #
+#   #    #
+#   #    #
+#   #    #
+#   #    #
+#  #     #
+######   #
+#_>      #
 #        #
 ##########
 4
 ##########
-# Z<#__  #
-# .      #
-# c      #
-# .      #
+#        #
+#        #
+#        #
+#        #
 #        #
 #        #
 #        #

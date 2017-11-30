@@ -10,7 +10,6 @@ class GameObject
     }
 }
 
-
 class GameUnit extends GameObject
 {
     constructor(model) {
@@ -167,9 +166,15 @@ class GameUnit extends GameObject
 	raycaster.ray.origin.copy( this.model.position )
 	let intersections = raycaster.intersectObjects( scene.children )
 
-	if (this.movement.jump && intersections.length > 0) {
-	    this.movement.velocity.y = this.jumppower
+	if (intersections.length > 0) {
+	    if (intersections[0].object.movable === true) {
+		this.movement.velocity.add(intersections[0].object.gameobject.velocity)
+	    }
+	    if (this.movement.jump) {
+		this.movement.velocity.y = this.jumppower
+	    }
 	}
+
 	this.movement.jump = false
 
 	if (!this.isDead) {

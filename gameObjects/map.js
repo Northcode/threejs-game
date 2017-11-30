@@ -141,6 +141,22 @@ class CubeItemPart extends Part
     }
 }
 
+
+let movingplatform_points = []
+
+class MovingPlatformPart extends Part
+{
+    build(start_point, scene, gameobjects) {
+	let platform = new MovingPlatform()
+	platform.startpos.copy(start_point)
+	platform.endpos.copy(get_grid_pos(this.x,this.y,this.z))
+	console.log("Built moving platform between: " + vec_to_str(start_point) + " and: " + vec_to_str(platform.endpos))
+	platform.rebuild_tween()
+	gameobjects.push(platform)
+	scene.add(platform.model)
+    }
+}
+
 let lastblock = undefined
 
 const generate_block = (x,y,z, chr, scene, gameobjects) => {
@@ -191,6 +207,20 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 	let part = new CubeItemPart(x,y,z, 0xaa2222)
 	part.build(scene,gameobjects)
     } break
+    case 'M': {
+	movingplatform_points.push(new THREE.Vector3(x,y,z))
+    } break
+    case 'N': {
+	console.log("looking for start points from: " + vec_to_str(new THREE.Vector3(x,y,z)))
+	movingplatform_points.map(p => {
+	    console.log("have point: " + vec_to_str(p))
+	    if(p.x == x || p.z == z) {
+		let part = new MovingPlatformPart(x,y,z, 0x22aa22)
+		let gp = get_grid_pos(p.x, p.y, p.z)
+		part.build(gp, scene, gameobjects)
+	    }
+	})
+    } break
     }
     if (tmp && lastblock != undefined) {
 	lastblock.build(scene)
@@ -223,6 +253,10 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 	    for (const c of line) {
 		if (c == "S") {
 		    startpos_f(get_grid_pos(x,y,z))
+		    if (lastblock != undefined) {
+			lastblock.build(scene)
+			lastblock = undefined
+		    }
 		} else {
 		    generate_block(x,y,z, c, scene, gameobjects)
 		}
