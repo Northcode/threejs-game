@@ -6,16 +6,6 @@ class Player extends GameUnit
 			Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
 		this.model.setAngularFactor(new THREE.Vector3(0,0,0))
 		// this.model.castShadow = true
-		load_object("assets/models/characterBase.json").then(object => {
-			/*let mesh = new THREE.Mesh(
-				geometry,
-				new THREE.MeshStandardMaterial({ color: 0xffffff })
-			)*/
-			this.animationMixer = new THREE.AnimationMixer( object )
-			object.scale.set(2,2,2)
-			this.object = object
-			this.model.add(object)
-		})
 		this.controls = controls
 		this.model.add(controls.getObject())
 		this.movespeed = 10
@@ -25,6 +15,18 @@ class Player extends GameUnit
 		this.lives = 5
 
 		this.hitbar = document.getElementById("health")
+
+		load_object("assets/models/characterBase.json").then(object => {
+			/*let mesh = new THREE.Mesh(
+				geometry,
+				new THREE.MeshStandardMaterial({ color: 0xffffff })
+			)*/
+			this.animationMixer = new THREE.AnimationMixer( object )
+		    object.position.set(0,-1.8,0)
+			object.scale.set(2,2,2)
+			this.object = object
+		    this.controls.getObject().add(object)
+		})
 	}
 
 	takeDamage(damage){
