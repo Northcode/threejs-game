@@ -89,6 +89,15 @@ class GameUnit extends GameObject
     update(keyboard, scene) {
 	super.update(keyboard, scene)
 
+	if (this.object != null) {
+		if (this.is_moving()) {
+			this.animationMixer.clipAction( this.object.animations[ 0 ] ).play();
+			this.animationMixer.update( clock.getDelta() );
+		}else {
+			this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
+		}
+	}
+
 	this.updateMatrix()
 
 	let old_velocity = this.model.getLinearVelocity()

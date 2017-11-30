@@ -21,8 +21,18 @@
 
 	 #lives{
 		 position: absolute;
-		 left: 5%;
+		 left: 4%;
 		 top: 5%;
+
+		 padding: 20px;
+		 border-radius: 5px;
+		 border-color: rgba(10, 10, 10, 0.5);
+		 border-width: 5px;
+		 background: rgba(20, 20, 20, 0.5);
+
+		 color: rgb( 200, 200, 200);
+		 font-family: verdana;
+		 font-size: 150%;
 	 }
 
 	 #inventory {
@@ -83,6 +93,7 @@
 
 	 const shadowMapRes = 4096
 	 const deg_to_rad = (deg) => deg * (Math.PI / 180)
+	 var clock = new THREE.Clock();
 
 	 let gameobjects = []
 
