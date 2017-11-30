@@ -212,12 +212,15 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
     } break
     case 'N': {
 	console.log("looking for start points from: " + vec_to_str(new THREE.Vector3(x,y,z)))
-	movingplatform_points.map(p => {
+	movingplatform_points = movingplatform_points.filter(p => {
 	    console.log("have point: " + vec_to_str(p))
 	    if(p.x == x || p.z == z) {
 		let part = new MovingPlatformPart(x,y,z, 0x22aa22)
 		let gp = get_grid_pos(p.x, p.y, p.z)
 		part.build(gp, scene, gameobjects)
+		return true
+	    } else {
+		return false
 	    }
 	})
     } break
