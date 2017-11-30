@@ -152,7 +152,7 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 	    lastblock.w += 1
 	    lastblock.x += 0.5
 	} else {
-	    lastblock = new Block(x,y,z, 1,1,1, 0x22aa00)
+	    lastblock = new Block(x,y,z, 1,1,1, 0xffffff)
 	}
     } break
     case '_': {
