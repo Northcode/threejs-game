@@ -71,16 +71,32 @@ class GameUnit extends GameObject
 	}
 
 	die(){
+	    this.model.setLinearVelocity(zero_vec)
 		this.isDead = true
 		this.respawn()
 	}
 
-	respawn() {
-		this.isDead = false
-		this.hp = 100
-		this.model.position.copy(this.spawnpoint)
-		this.model.__dirtyPosition = true
-	}
+    respawn() {
+	this.isDead = false
+	this.hp = 100
+	this.movement.velocity.set(0,0,0)
+	this.model.setLinearVelocity(this.movement.velocity)
+	this.model.position.copy(this.spawnpoint)
+	this.model.__dirtyPosition = true
+	console.log(this.movement.velocity)
+	console.log(this.model.getLinearVelocity())
+    }
+
+    lookAt(position) {
+	let vec = new THREE.Vector3()
+	vec.subVectors(position, this.model.position)
+	vec.normalize()
+	let yRot = Math.atan2(vec.x, vec.z) + Math.PI
+	let zRot = -Math.asin(vec.y)
+	// console.log("rotation to: " + yRot)
+	this.model.rotation.set(0, yRot, 0)
+	this.model.__dirtyRotation = true
+    }
 
     updateMatrix() {
 	return undefined
@@ -97,6 +113,7 @@ class GameUnit extends GameObject
 			this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
 		}
 	}
+
 
 	this.updateMatrix()
 
@@ -148,8 +165,12 @@ class GameUnit extends GameObject
 	}
 	this.movement.jump = false
 
-	this.model.setLinearVelocity(this.movement.velocity)
-	this.model.setAngularFactor(zero_vec)
+	if (!this.isDead) {
+	    this.model.setLinearVelocity(this.movement.velocity)
+	    this.model.setAngularFactor(zero_vec)
+	} else {
+	    this.model.setLinearVelocity(zero_vec)
+	}
 
     }
 }

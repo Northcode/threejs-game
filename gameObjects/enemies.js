@@ -15,7 +15,7 @@ class Zombie extends GameUnit
 			this.object = object
 			this.model.add(object)
 		})
-		this.movespeed = 10
+		this.movespeed = 5
 
 	}
 	die(){
@@ -24,4 +24,16 @@ class Zombie extends GameUnit
 			this.isDead = true
 		}
 	}
+
+    update(keyboard, scene) {
+	super.update(keyboard, scene)
+
+	this.rotationMatrix.extractRotation(this.model.matrix)
+	
+	// console.log(scene.player.model.position.clone())
+	if (!this.isDead) {
+	    this.lookAt(scene.player.model.position.clone())
+	    this.forward()
+	}
+    }
 }

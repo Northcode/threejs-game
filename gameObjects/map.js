@@ -32,7 +32,7 @@ class SizedPart extends Part
 class Block extends SizedPart
 {
     build(scene) {
-	console.log ("building block of size: " + this.w + "," + this.h + "," + this.d + " at: " + this.x + "," + this.y + "," + this.z)
+	// console.log ("building block of size: " + this.w + "," + this.h + "," + this.d + " at: " + this.x + "," + this.y + "," + this.z)
 	 let box = new Physijs.BoxMesh(
 	     new THREE.BoxGeometry(8*this.w,6*this.h,8*this.d),
 	     Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
