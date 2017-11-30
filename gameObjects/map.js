@@ -58,7 +58,7 @@ class Roof extends Part
 
 	box.castShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
-	box.position.y -= 3.25
+	box.position.y += 2.75
 	scene.add(box)
     }
 }
