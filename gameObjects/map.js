@@ -122,6 +122,16 @@ class ZombiePart extends Part
     }
 }
 
+class CubeItemPart extends Part
+{
+    build(scene, gameobjects) {
+	let cube = new CubeItem()
+	cube.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+	gameobjects.push(cube)
+	scene.add(cube.model)
+    }
+}
+
 let lastblock = undefined
 
 const generate_block = (x,y,z, chr, scene, gameobjects) => {
@@ -166,6 +176,10 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
     } break
     case 'Z': {
 	let part = new ZombiePart(x,y,z, 0xaa2222)
+	part.build(scene,gameobjects)
+    } break
+    case 'c': {
+	let part = new CubeItemPart(x,y,z, 0xaa2222)
 	part.build(scene,gameobjects)
     } break
     }
