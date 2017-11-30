@@ -25,7 +25,7 @@ class Player extends GameUnit
 		    object.position.set(0,-1.8,0)
 			object.scale.set(2,2,2)
 			this.object = object
-		    this.controls.getObject().add(object)
+		    // this.controls.getObject().add(object)
 		})
 	}
 

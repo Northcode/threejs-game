@@ -104,7 +104,8 @@ class Stairs extends Part
 	    stair.rotation.set(deg_to_rad(36),deg_to_rad(180),0)
 	    stair.rotateOnWorldAxis(new THREE.Vector3(0,1,0), deg_to_rad(angle))
 	    stair.position.copy(get_grid_pos(this.x,this.y,this.z))
-	    stair.translateY(-0.5)
+	    stair.position.y -= 0.5
+	    // stair.translateZ(0.1)
 	    scene.add(stair)
 	})
     }
