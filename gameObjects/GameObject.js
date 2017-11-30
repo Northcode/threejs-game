@@ -3,7 +3,7 @@ class GameObject
     constructor() {
     }
 
-    animate() {
+    animate(delta) {
     }
 
     update(keyboard, scene) {
@@ -102,18 +102,19 @@ class GameUnit extends GameObject
 	return undefined
     }
 
+    animate(delta) {
+	if (this.object != null) {
+	    if (this.is_moving()) {
+		this.animationMixer.clipAction( this.object.animations[ 0 ] ).play();
+		this.animationMixer.update( delta );
+	    }else {
+		this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
+	    }
+	}
+    }
+
     update(keyboard, scene) {
 	super.update(keyboard, scene)
-
-	if (this.object != null) {
-		if (this.is_moving()) {
-			this.animationMixer.clipAction( this.object.animations[ 0 ] ).play();
-			this.animationMixer.update( clock.getDelta() );
-		}else {
-			this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
-		}
-	}
-
 
 	this.updateMatrix()
 

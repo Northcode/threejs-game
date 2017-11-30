@@ -299,7 +299,8 @@
 
 	 // ANIM LOOP
 	 const animate = () => {
-	     gameobjects.map(o => o.animate())
+	     let delta = clock.getDelta()
+	     gameobjects.map(o => o.animate(delta))
 	     renderer.render(scene, camera)
 	 }
 
