@@ -36,6 +36,9 @@ class Player extends GameUnit
 
 	die(){
 		this.lives -= 1
+		if (this.lives <= 0) {
+			document.exitPointerLock();
+		}
 		super.die()
 	}
 

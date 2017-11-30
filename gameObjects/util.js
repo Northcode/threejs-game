@@ -7,9 +7,9 @@ const setup_pointer_lock = function(onlock,onunlock) {
 	const pointerlockchange = function ( event ) {
 
 	    if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-		onlock()
+			onlock()
 	    } else {
-		onunlock()
+			onunlock()
 	    }
 	};
 
