@@ -24,7 +24,10 @@ class Player extends GameUnit
 		    this.animationMixer = new THREE.AnimationMixer( object )
 		    object.position.set(0,-1.8,0)
 		    object.scale.set(2,2,2)
-		    object.material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0 })
+		    object.children.map(c => {
+			c.material.transparent = true
+			c.material.opacity = 0
+		    })
 		    this.object = object
 		    this.controls.getObject().add(object)
 		})

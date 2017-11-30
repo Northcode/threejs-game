@@ -105,8 +105,11 @@ class GameUnit extends GameObject
     animate(delta) {
 	if (this.object != null) {
 	    if (this.is_moving()) {
+		if (this.movement.sprinting) {
+		    delta *= 2
+		}
 		this.animationMixer.clipAction( this.object.animations[ 0 ] ).play();
-		this.animationMixer.update( delta );
+		this.animationMixer.update( delta * 2);
 	    }else {
 		this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
 	    }
@@ -118,6 +121,7 @@ class GameUnit extends GameObject
 	this.movement.backward = false
 	this.movement.left = false
 	this.movement.right = false
+	this.movement.sprinting = false
     }
 
     update(keyboard, scene) {
@@ -135,7 +139,6 @@ class GameUnit extends GameObject
 
 	if (this.movement.sprinting) {
 	    cur_mov_speed = this.sprintspeed
-	    this.movement.sprinting = false
 	}else {
 	    cur_mov_speed = this.movespeed
 	}
