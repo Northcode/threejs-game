@@ -273,12 +273,14 @@
 	 setup_pointer_lock(() => {
 	     camera_controls.enabled = true;
 		 screenBlocker.style.display = 'none'
+	     scene.onSimulationResume()
 		 physLoop.start()
 	 }, () => {
 	     camera_controls.enabled = false;
-		 screenBlocker.style.display = 'blocker'
-		 instructions.style.display = 'instructions';
-		 physLoop.stop()
+	     screenBlocker.style.display = 'blocker'
+	     instructions.style.display = 'instructions'
+	     physLoop.stop()
+	     console.log(physLoop.isRunning())
 	 });
 
 	 let player = new Player(camera_controls)
