@@ -136,6 +136,13 @@ class CubeItemPart extends Part
     build(scene, gameobjects) {
 	let cube = new CubeItem()
 	cube.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+
+	cube.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {
+	    if (other == scene.player.model) {
+		scene.remove(cube.model)
+		scene.player.pickup_item(cube)
+	    }
+	})
 	gameobjects.push(cube)
 	scene.add(cube.model)
     }

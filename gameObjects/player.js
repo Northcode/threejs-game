@@ -12,6 +12,8 @@ class Player extends GameUnit
 		this.sprintspeed = 20
 		this.jumppower = 15
 
+	    this.inventory = []
+
 		this.lives = 5
 
 		this.hitbar = document.getElementById("health")
@@ -32,6 +34,10 @@ class Player extends GameUnit
 		    this.controls.getObject().add(object)
 		})
 	}
+
+    pickup_item(item) {
+	this.inventory.push(item)
+    }
 
 	takeDamage(damage){
 		super.takeDamage(damage)
