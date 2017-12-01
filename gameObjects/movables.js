@@ -15,6 +15,7 @@ class MovingPlatform extends GameObject
 	this.duration = 5000
 	this.distance = 0
 	this.velocity = zero_vec.clone()
+	this.model.castShadow = true
     }
 
     rebuild_tween() {

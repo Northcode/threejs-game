@@ -160,6 +160,12 @@ class CubeItemPart extends Part
 	    if (other == scene.player.model) {
 		scene.remove(cube.model)
 		scene.player.pickup_item(cube)
+		let inventory_content = []
+		let inventory = scene.player.inventory
+		for (let item of inventory){
+			inventory_content.push(item.model.children[0].name)
+		}
+		document.getElementById('inventory-content').innerHTML = inventory_content.join("</br>")
 	    }
 	})
 	gameobjects.push(cube)

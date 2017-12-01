@@ -19,7 +19,7 @@
         "uuid":"D0684CB1-6D11-4B75-95D2-034576AE0DA6",
         "matrix":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
         "children":[{
-            "name":"Cylinder",
+            "name":"Key Part 1",
             "uuid":"84A74759-EA60-470C-8118-5AC8E9FC1775",
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
@@ -28,7 +28,7 @@
             "receiveShadow":false,
             "geometry":"0E475BE4-292B-4616-9062-981B4BAF4ECF"
         },{
-            "name":"Cylinder.001",
+            "name":"Key Part 2",
             "uuid":"F3300188-6B57-466D-8E69-7442C17A7A06",
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
@@ -37,7 +37,7 @@
             "receiveShadow":false,
             "geometry":"E6C6CA73-BA49-42EC-ABCC-9300EF30C616"
         },{
-            "name":"Cylinder.002",
+            "name":"Key Part 3",
             "uuid":"AD0009D4-A3A9-4257-9C49-D1382D6A1575",
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
@@ -46,7 +46,7 @@
             "receiveShadow":false,
             "geometry":"445B9AC6-C009-4713-B9B7-762834676AF6"
         },{
-            "name":"Cylinder.003",
+            "name":"Key Part 4",
             "uuid":"C5AFB6F0-B83D-4961-95C2-0381303DBC1B",
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
@@ -55,7 +55,7 @@
             "receiveShadow":false,
             "geometry":"11B8F698-C9CC-4783-BBAE-EA17AAC24869"
         },{
-            "name":"Cylinder.004",
+            "name":"Key Part 5",
             "uuid":"07C160C7-8DB3-4F99-B5A1-31C45B85C031",
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
