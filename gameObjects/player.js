@@ -44,8 +44,8 @@ class Player extends GameUnit
 	this.inventory.push(item)
     }
 
-    takeDamage(damage){
-	super.takeDamage(damage)
+    takeDamage(damage, direction){
+	super.takeDamage(damage,direction)
 	this.hitbar.value = this.hp
     }
 
@@ -81,14 +81,14 @@ class Player extends GameUnit
 	    this.bullet.target = intersects[0].point
 	    this.bullet.position.copy(bullet_cast.ray.origin)
 	    this.bullet.tweenpos = this.bullet.position.clone()
-	    console.log("bullet from: " + vec_to_str(bullet_cast.ray.origin) + " to: " + vec_to_str(this.bullet.target))
+	    // console.log("bullet from: " + vec_to_str(bullet_cast.ray.origin) + " to: " + vec_to_str(this.bullet.target))
 	    this.bullet.tween = new TWEEN.Tween(this.bullet.tweenpos)
 		.to(this.bullet.target, 200)
 		.onUpdate(() => {
 		    this.bullet.position.copy(this.bullet.tweenpos)
 		})
 		.onComplete(() => {
-		    // scene.remove(this.bullet)
+		    scene.remove(this.bullet)
 		    console.log("Pew done!")
 		})
 

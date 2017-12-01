@@ -24,6 +24,7 @@ class GameUnit extends GameObject
 	    speed: 10,
 	    sprintspeed: 20,
 	    jumpforce: 15,
+	    stunned: 0,
 	    velocity: new THREE.Vector3(0,0,0)
 	}
 	this.rotationMatrix = new THREE.Matrix4()
@@ -62,12 +63,16 @@ class GameUnit extends GameObject
 	return this.movement.forward || this.movement.backward || this.movement.left || this.movement.right
     }
 
-	takeDamage(damage){
-		this.hp -= damage
-		if (this.hp <= 0) {
-			this.die()
-		}
+    takeDamage(damage,direction){
+	if (this.movement.stunned == 0) {
+	    this.hp -= damage
+	    if (this.hp <= 0) {
+		this.die()
+	    } else {
+		this.movement.stunned = 10
+	    }
 	}
+    }
 
 	die(){
 	    this.model.setLinearVelocity(zero_vec)
@@ -182,11 +187,18 @@ class GameUnit extends GameObject
 
 	this.movement.jump = false
 
-	if (!this.isDead) {
+	if(this.movement.stunned > 0) {
+	    this.movement.stunned -= 1
+	}
+
+	if (!this.isDead && this.movement.stunned == 0) {
 	    this.model.setLinearVelocity(this.movement.velocity)
 	    this.model.setAngularFactor(zero_vec)
 	} else {
-	    this.model.setLinearVelocity(zero_vec)
+	    let oldy = old_velocity.y
+	    old_velocity.multiplyScalar(0.98)
+	    old_velocity.y = oldy
+	    this.model.setLinearVelocity(old_velocity)
 	}
 
 
