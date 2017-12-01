@@ -90,6 +90,21 @@
 		 cursor: pointer;
 	 }
 
+	 #crosshair {
+		 position: absolute;
+		 width: 10px;
+		 height: 10px;
+		 top: 50%;
+		 left: 50%;
+
+  		 margin-top: -20px;
+  		 margin-left: -10px;
+		 text-align: center;
+
+		 font-size: 24pt;
+		 color: #ffffff;
+	 }
+
 	 progress[value] {
 		 -webkit-appearance: none;
 		 -moz-appearance: none;
@@ -115,6 +130,9 @@
 			<div id="instructions">
 				Click anywhere on the screen to begin
 			</div>
+		</div>
+		<div id="crosshair">
+			+
 		</div>
 
 		<script src="lib/three.js"></script>

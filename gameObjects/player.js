@@ -83,8 +83,8 @@ class Player extends GameUnit
 	bullet_cast.ray.origin.y += 1.7
 	let intersects = bullet_cast.intersectObjects(scene.children)
 	if (intersects.length > 0) {
-	    let arrow = new THREE.ArrowHelper(bullet_cast.ray.direction.normalize(), bullet_cast.ray.origin, intersects[0].distance, 0x0000ff)
-	    scene.add(arrow)
+	    // let arrow = new THREE.ArrowHelper(bullet_cast.ray.direction.normalize(), bullet_cast.ray.origin, intersects[0].distance, 0x0000ff)
+	    // scene.add(arrow)
 
 	    this.bullet.target = intersects[0].point
 	    this.bullet.position.copy(bullet_cast.ray.origin)
