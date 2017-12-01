@@ -33,7 +33,18 @@ class Zombie extends GameUnit
 	// console.log(scene.player.model.position.clone())
 	if (!this.isDead) {
 	    this.lookAt(scene.player.model.position.clone())
-	    this.forward()
+
+	    let rayvec = new THREE.Vector3(0,-1,-0.5)
+	    rayvec.applyMatrix4(this.rotationMatrix)
+
+	    let raycaster = new THREE.Raycaster( new THREE.Vector3(), rayvec, 0, 5 )
+	    raycaster.ray.origin.copy( this.model.position )
+	    let intersections = raycaster.intersectObjects( scene.children )
+
+	    if (intersections.length > 0) {
+		this.forward()
+	    }
+	    
 	}
 
 	super.update(keyboard, scene)
