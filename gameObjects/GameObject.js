@@ -102,17 +102,22 @@ class GameUnit extends GameObject
     }
 
     animate(delta) {
-	if (this.object != null) {
-	    if (this.is_moving()) {
-		if (this.movement.sprinting) {
-		    delta *= 2
+		if (this.object != null) {
+			let animationAction = this.animationMixer.clipAction( this.object.animations[ 0 ] )
+			if (this.is_moving()) {
+				if (this.movement.sprinting) {
+					delta *= 2
+				}
+				if (!animationAction.isRunning()) {
+					animationAction.play();
+				}
+				this.animationMixer.update( delta * 2);
+			}else {
+				if (animationAction.isRunning()) {
+					animationAction.stop();
+				}
+			}
 		}
-		this.animationMixer.clipAction( this.object.animations[ 0 ] ).play();
-		this.animationMixer.update( delta * 2);
-	    }else {
-		this.animationMixer.clipAction( this.object.animations[ 0 ] ).stop();
-	    }
-	}
     }
 
     resetMovement() {
