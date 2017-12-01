@@ -62,6 +62,10 @@ class Player extends GameUnit
 		this.rotationMatrix = this.controls.getObject().matrix
     }
 
+    onclick(keyboard, scene) {
+	console.log("pew!")
+    }
+
     update(keyboard, scene) {
 	this.resetMovement()
 	

@@ -1,14 +1,18 @@
-const setup_pointer_lock = function(onlock,onunlock) {
+const setup_pointer_lock = function(onlock,onunlock, onclick) {
     let havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document
 
     if (havePointerLock) {
 	let element = document.body;
 
+	element.controls_enabled = false
+
 	const pointerlockchange = function ( event ) {
 
 	    if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+		element.controls_enabled = true
 			onlock()
 	    } else {
+		element.controls_enabled = false
 			onunlock()
 	    }
 	};
@@ -21,8 +25,12 @@ const setup_pointer_lock = function(onlock,onunlock) {
 	element.addEventListener( 'click', function ( event ) {
 
 	    // Ask the browser to lock the pointer
-	    element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-	    element.requestPointerLock();
+	    if (!element.controls_enabled) {
+		element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock
+		element.requestPointerLock()
+	    } else {
+		onclick()
+	    }
 
 	}, false )
 

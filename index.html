@@ -221,6 +221,9 @@
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
 	 //
 
+	 // KEYBOARD
+	 let keyboard = new THREEx.KeyboardState()
+
 	 let player_startpos = new THREE.Vector3(16,30,16)
 
 	 generate_map_from(
@@ -297,6 +300,8 @@
 		 paused = true
 	     physLoop.stop()
 	     console.log(physLoop.isRunning())
+	 }, () => {
+	     player.onclick(keyboard, scene)
 	 });
 
 	 let player = new Player(camera_controls)
@@ -309,9 +314,6 @@
 	 // ORBIT CONTROLS
 	 /* let controls = new THREE.OrbitControls( camera, renderer.domElement )
 	    scene.add(camera)*/
-
-	 // KEYBOARD
-	 let keyboard = new THREEx.KeyboardState()
 
 	 // ANIM LOOP
 	 const animate = () => {
