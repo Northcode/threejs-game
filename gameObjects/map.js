@@ -132,14 +132,14 @@ class ZombiePart extends Part
 }
 
 let keyParts = []
-
-let keyPartsP = load_object('compleateCirkleKey.json')
-let allKeyParts = keyPartsP.then(object => {
-	console.log(object);
+let keyPartsLoadedP = new Promise((resolve, reject) => {
+let keyPartsP = load_object('assets/models/compleateCircleKey.json')
+    let allKeyParts = keyPartsP.then(object => {
 	for (child of object.children){
-		keyParts.push(child)
+	    keyParts.push(child)
 	}
-	console.log(keyParts);
+	resolve(keyParts)
+    })
 })
 
 class CubeItemPart extends Part
@@ -147,6 +147,14 @@ class CubeItemPart extends Part
     build(scene, gameobjects) {
 	let cube = new CubeItem()
 	cube.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+
+	keyPartsLoadedP.then( object => {
+		let index = Math.floor(Math.random() * keyParts.length)
+		let keyPart = keyParts[index]
+		keyParts.splice(index, 1)
+		console.log(keyParts);
+	    cube.model.add(keyPart)
+	})
 
 	cube.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {
 	    if (other == scene.player.model) {
@@ -157,15 +165,6 @@ class CubeItemPart extends Part
 	gameobjects.push(cube)
 	scene.add(cube.model)
     }
-	// keyPartsP.then( object => {
-	// 	let index = Math.floor(Math.random() * keyParts.length)
-	// 	let keyPart = keyParts[index]
-	// 	keyParts.splice(index, 1)
-	// 	console.log(keyParts);
-	// 	keyPart.model.position.copy(get_grid_pos(this.x, this.y, this.z))
-	// 	gameobject.push(keyPart)
-	// 	scene.add(keyPart.model)
-	// })
 }
 
 
