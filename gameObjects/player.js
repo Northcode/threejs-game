@@ -18,6 +18,14 @@ class Player extends GameUnit
 
 	this.hitbar = document.getElementById("health")
 
+	this.gunSound = new THREE.Audio(audioListener)
+	let audioLoader = new THREE.AudioLoader()
+
+	audioLoader.load('assets/music/pew.mp3', buffer => {
+		this.gunSound.setBuffer(buffer)
+		this.gunSound.setVolume(0.6)
+	})
+
 	load_object("assets/models/characterBase.json").then(object => {
 	    // let mesh = new THREE.Mesh(
 	    // 	geometry,
@@ -94,6 +102,7 @@ class Player extends GameUnit
 
 	    scene.add(this.bullet)
 	    this.bullet.tween.start()
+		this.gunSound.play()
 	}
     }
 
@@ -104,7 +113,7 @@ class Player extends GameUnit
 
     update(keyboard, scene) {
 	this.resetMovement()
-	
+
 	if (keyboard.pressed("shift")) {
 	    this.sprint()
 	}
