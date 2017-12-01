@@ -37,9 +37,9 @@ class Block extends SizedPart
 	    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
 	    let ctex = tex
 	    ctex.clone(tex)
-	    
+
 	    ctex.repeat.set(this.w, 1)
-	    
+
 	    let box = new Physijs.BoxMesh(
 		new THREE.BoxGeometry(8*this.w,6*this.h,8*this.d),
 		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color, map: ctex }), 0.3,0.3), 0)
@@ -131,6 +131,17 @@ class ZombiePart extends Part
     }
 }
 
+let keyParts = []
+
+let keyPartsP = load_object('compleateCirkleKey.json')
+let allKeyParts = keyPartsP.then(object => {
+	console.log(object);
+	for (child of object.children){
+		keyParts.push(child)
+	}
+	console.log(keyParts);
+})
+
 class CubeItemPart extends Part
 {
     build(scene, gameobjects) {
@@ -146,6 +157,15 @@ class CubeItemPart extends Part
 	gameobjects.push(cube)
 	scene.add(cube.model)
     }
+	// keyPartsP.then( object => {
+	// 	let index = Math.floor(Math.random() * keyParts.length)
+	// 	let keyPart = keyParts[index]
+	// 	keyParts.splice(index, 1)
+	// 	console.log(keyParts);
+	// 	keyPart.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+	// 	gameobject.push(keyPart)
+	// 	scene.add(keyPart.model)
+	// })
 }
 
 
