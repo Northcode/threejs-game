@@ -5,7 +5,7 @@ class MovingPlatform extends GameObject
 	this.color = color
 	this.model = new Physijs.BoxMesh(
 		new THREE.BoxGeometry(7,1,7),
-		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+		Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 1)
 
 	this.model.gameobject = this
 	this.model.movable = true
@@ -43,6 +43,8 @@ class MovingPlatform extends GameObject
     }
 
     update(keyboard, scene) {
+	this.model.setLinearFactor(zero_vec)
+	this.model.setAngularFactor(zero_vec)
 	this.model.position.copy(this.tweenpos)
 	this.model.__dirtyPosition = true
 	// console.log("platform vel: " + vec_to_str(this.velocity))

@@ -4,7 +4,7 @@ class CubeItem extends GameObject
 	super()
 	this.model = new Physijs.BoxMesh(
 	    new THREE.CubeGeometry(1,1,1),
-	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x2222aa, transparent: true, opacity: 0 }), 0.1, 0.1), 0)
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: 0x2222aa, transparent: true, opacity: 0}), 0.5, 0.5), 0)
 
 	this.rotation = { x: 0, y: 0, z: 0 }
 	this.tween = new TWEEN.Tween(this.rotation)

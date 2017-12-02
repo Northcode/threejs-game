@@ -145,21 +145,21 @@ let keyPartsP = load_object('assets/models/compleateCircleKey.json')
 class CubeItemPart extends Part
 {
     build(scene, gameobjects) {
-	let cube = new CubeItem()
-	cube.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+	let item = new CubeItem()
+	item.model.position.copy(get_grid_pos(this.x, this.y, this.z))
 
 	keyPartsLoadedP.then( object => {
 		let index = Math.floor(Math.random() * keyParts.length)
 		let keyPart = keyParts[index]
 		keyParts.splice(index, 1)
 		console.log(keyParts);
-	    cube.model.add(keyPart)
+	    item.model.add(keyPart)
 	})
 
-	cube.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {
+	item.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {
 	    if (other == scene.player.model) {
-		scene.remove(cube.model)
-		scene.player.pickup_item(cube)
+		scene.remove(item.model)
+		scene.player.pickup_item(item)
 		let inventory_content = []
 		let inventory = scene.player.inventory
 		for (let item of inventory){
@@ -168,8 +168,8 @@ class CubeItemPart extends Part
 		document.getElementById('inventory-content').innerHTML = inventory_content.join("</br>")
 	    }
 	})
-	gameobjects.push(cube)
-	scene.add(cube.model)
+	gameobjects.push(item)
+	scene.add(item.model)
     }
 }
 
