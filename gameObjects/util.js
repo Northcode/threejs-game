@@ -89,6 +89,30 @@ const draw_vec = (vec) => {
     scene.add(arr)
 }
 
+const get_key_color = (keyPart) => {
+	let color
+	switch (keyPart.name) {
+		case "Key Part 1":
+			color = keyColors[0]
+			break;
+		case "Key Part 2":
+			color = keyColors[1]
+			break;
+		case "Key Part 3":
+			color = keyColors[2]
+			break;
+		case "Key Part 4":
+			color = keyColors[3]
+			break;
+		case "Key Part 5":
+			color = keyColors[4]
+			break;
+		default:
+		color = keyColors[0]
+	}
+	return color
+}
+
 
 const zero_vec = new THREE.Vector3(0,0,0)
 const ident_vec = new THREE.Vector3(1,1,1)

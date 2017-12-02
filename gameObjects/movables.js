@@ -50,3 +50,26 @@ class MovingPlatform extends GameObject
 	// console.log("platform vel: " + vec_to_str(this.velocity))
     }
 }
+
+class Door extends GameObject {
+	constructor(color) {
+		super()
+		this.color = color
+		this.model = new Physijs.BoxMesh(
+			new THREE.BoxGeometry(8,6,8),
+			Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+		keyPartsLoadedP.then(object => {
+			for (let doorKeyPart of doorKey){
+				console.log(doorKeyPart.color);
+				let color = get_key_color(doorKeyPart)
+				doorKeyPart.translateZ(4)
+				doorKeyPart.material = new THREE.MeshStandardMaterial( {
+					color: color,
+					opacity: 0.4,
+					transparent: true
+				} )
+				this.model.add(doorKeyPart)
+			}
+		})
+	}
+}

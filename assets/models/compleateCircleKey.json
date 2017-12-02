@@ -24,6 +24,7 @@
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
             "type":"Mesh",
+			"color":"0x3BFF21",
             "castShadow":false,
             "receiveShadow":false,
             "geometry":"0E475BE4-292B-4616-9062-981B4BAF4ECF"
@@ -33,6 +34,7 @@
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
             "type":"Mesh",
+			"color":"0xE8B71E",
             "castShadow":false,
             "receiveShadow":false,
             "geometry":"E6C6CA73-BA49-42EC-ABCC-9300EF30C616"
@@ -42,6 +44,7 @@
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
             "type":"Mesh",
+			"color":"0xFF472D",
             "castShadow":false,
             "receiveShadow":false,
             "geometry":"445B9AC6-C009-4713-B9B7-762834676AF6"
@@ -51,6 +54,7 @@
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
             "type":"Mesh",
+			"color":"0x741EE8",
             "castShadow":false,
             "receiveShadow":false,
             "geometry":"11B8F698-C9CC-4783-BBAE-EA17AAC24869"
@@ -60,6 +64,7 @@
             "matrix":[-0.5,0,0,0,0,0.5,-0,0,0,-0,-0.125,0,0,0,0,1],
             "visible":true,
             "type":"Mesh",
+			"color":"0x5AEBFF",
             "castShadow":false,
             "receiveShadow":false,
             "geometry":"A4506A0A-A623-4199-9897-DCFCBB1B9755"

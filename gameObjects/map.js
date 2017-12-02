@@ -131,12 +131,16 @@ class ZombiePart extends Part
     }
 }
 
+let keyColors = [0x3BFF21, 0xE8B71E, 0xFF472D, 0x741EE8, 0x5AEBFF]
+
 let keyParts = []
+let doorKey = []
 let keyPartsLoadedP = new Promise((resolve, reject) => {
 let keyPartsP = load_object('assets/models/compleateCircleKey.json')
     let allKeyParts = keyPartsP.then(object => {
 	for (child of object.children){
-	    keyParts.push(child)
+		keyParts.push(child)
+	    doorKey.push(child.clone())
 	}
 	resolve(keyParts)
     })
@@ -152,6 +156,7 @@ class CubeItemPart extends Part
 		let index = Math.floor(Math.random() * keyParts.length)
 		let keyPart = keyParts[index]
 		keyParts.splice(index, 1)
+		keyPart.material = new  THREE.MeshStandardMaterial({ color: get_key_color(keyPart) })
 		console.log(keyPart);
 	    item.model.add(keyPart)
 	})
@@ -160,12 +165,7 @@ class CubeItemPart extends Part
 	    if (other == scene.player.model) {
 		scene.remove(item.model)
 		scene.player.pickup_item(item)
-		let inventory_content = []
-		let inventory = scene.player.inventory
-		for (let item of inventory){
-			inventory_content.push(item.model.children[0].name)
-		}
-		document.getElementById('inventory-content').innerHTML = inventory_content.join("</br>")
+		scene.player.update_inventory()
 	    }
 	})
 	gameobjects.push(item)
@@ -187,6 +187,15 @@ class MovingPlatformPart extends Part
 	gameobjects.push(platform)
 	scene.add(platform.model)
     }
+}
+
+class FinishDoor extends Part {
+	build(scene, gameobjects) {
+		let door = new Door(this.color)
+		door.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+		gameobjects.push(door)
+		scene.add(door.model)
+	}
 }
 
 let lastblock = undefined
@@ -255,6 +264,10 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 		return false
 	    }
 	})
+    } break
+	case 'D': {
+	let part = new FinishDoor(x,y,z, 0x0000ff)
+	part.build(scene, gameobjects)
     } break
     }
     if (tmp && lastblock != undefined) {

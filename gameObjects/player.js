@@ -52,6 +52,15 @@ class Player extends GameUnit
 	this.inventory.push(item)
     }
 
+	update_inventory(){
+		let inventory_content = []
+		let inventory = this.inventory
+		for (let item of inventory){
+			inventory_content.push(item.model.children[0].name)
+		}
+		document.getElementById('inventory-content').innerHTML = inventory_content.join("</br>")
+	}
+
     takeDamage(damage, direction){
 	super.takeDamage(damage,direction)
 	this.hitbar.value = this.hp
