@@ -159,6 +159,7 @@ class CubeItemPart extends Part
 		keyPart.material = new  THREE.MeshStandardMaterial({ color: get_key_color(keyPart) })
 		console.log(keyPart);
 	    item.model.add(keyPart)
+		item.name = keyPart.name
 	})
 
 	item.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {

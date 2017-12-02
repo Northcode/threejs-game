@@ -13,6 +13,7 @@ class Player extends GameUnit
 	this.jumppower = 15
 
 	this.inventory = []
+	this.placementDelay = 30
 
 	this.lives = 5
 
@@ -123,6 +124,16 @@ class Player extends GameUnit
 	this.shootBullet(scene)
     }
 
+	placeKeyPart(scene, keyPart, doorKeyPart){
+		for (let invItem of this.inventory){
+			if (invItem.name === keyPart.name) {
+				this.inventory.splice(this.inventory.indexOf(invItem), 1)
+				this.update_inventory()
+				doorKeyPart.material.opacity = 1
+			}
+		}
+	}
+
     update(keyboard, scene) {
 	this.resetMovement()
 
@@ -144,9 +155,33 @@ class Player extends GameUnit
 	if (keyboard.pressed("space")) {
 	    this.jump()
 	}
-
 	if (keyboard.pressed("M")) {
 	    this.takeDamage(10)
+	}
+
+	if (this.placementDelay > 0) {
+		this.placementDelay -= 1
+	}
+
+	let dirvec = new THREE.Vector3()
+	this.controls.getDirection(dirvec)
+	let key_cast = new THREE.Raycaster( new THREE.Vector3(), dirvec, 0, 5)
+	key_cast.ray.origin.copy(this.model.position)
+	key_cast.ray.origin.y += 1.7
+	let intersects = key_cast.intersectObjects(doorKey)
+	if (intersects.length > 0) {
+		// console.log("I see a keypart!");
+		let keyPart = this.inventory.find(item => {
+			return item.name == intersects[0].object.name
+		})
+		if ( keyPart ) {
+			if (keyboard.pressed("E") && this.placementDelay <= 0) {
+				this.placementDelay = 30
+				console.log(keyPart);
+				console.log(intersects);
+				this.placeKeyPart(scene, keyPart, intersects[0].object)
+			}
+		}
 	}
 
 	super.update(keyboard, scene)
