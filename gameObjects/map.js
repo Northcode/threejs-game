@@ -153,7 +153,7 @@ class CubeItemPart extends Part
 		let keyPart = keyParts[index]
 		keyParts.splice(index, 1)
 		console.log(keyPart);
-	    cube.model.add(keyPart)
+	    item.model.add(keyPart)
 	})
 
 	item.model.addEventListener("collision", (other, relative_velocity, contact_normal) => {
