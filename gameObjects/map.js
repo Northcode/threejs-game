@@ -194,6 +194,10 @@ class FinishDoor extends Part {
 	build(scene, gameobjects) {
 		let door = new Door(this.color)
 		door.model.position.copy(get_grid_pos(this.x, this.y, this.z))
+		door.startpos.copy(get_grid_pos(this.x, this.y, this.z))
+		door.endpos.copy(get_grid_pos(this.x, this.y-0.95, this.z))
+		door.tweenpos.copy(get_grid_pos(this.x, this.y, this.z))
+		scene.door = door
 		gameobjects.push(door)
 		scene.add(door.model)
 	}

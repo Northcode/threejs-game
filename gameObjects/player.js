@@ -130,6 +130,9 @@ class Player extends GameUnit
 				this.inventory.splice(this.inventory.indexOf(invItem), 1)
 				this.update_inventory()
 				doorKeyPart.material.opacity = 1
+				if (doorKey.every(item => item.material.opacity == 1)) {
+					scene.door.build_tween()
+				}
 			}
 		}
 	}

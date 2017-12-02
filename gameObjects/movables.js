@@ -71,5 +71,22 @@ class Door extends GameObject {
 				this.model.add(doorKeyPart)
 			}
 		})
+
+		this.startpos = zero_vec.clone()
+		this.endpos = zero_vec.clone()
+		this.tweenpos = zero_vec.clone()
+		this.duration = 4000
+	}
+
+	build_tween(){
+		console.log("Moving door");
+		let tween = new TWEEN.Tween(this.tweenpos)
+				.to(this.endpos, this.duration)
+				.easing(TWEEN.Easing.Quadratic.In)
+				.onUpdate( () =>{
+					this.model.position.copy(this.tweenpos)
+					this.model.__dirtyPosition = true
+				})
+				.start()
 	}
 }
