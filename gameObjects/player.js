@@ -102,6 +102,9 @@ class Player extends GameUnit
 
 	    scene.add(this.bullet)
 	    this.bullet.tween.start()
+		if (this.gunSound.isPlaying){
+			this.gunSound.stop()
+		}
 		this.gunSound.play()
 	}
     }
