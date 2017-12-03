@@ -13,7 +13,6 @@ class Player extends GameUnit
 	this.jumppower = 15
 
 	this.inventory = []
-	this.placementDelay = 30
 
 	this.lives = 5
 
@@ -162,10 +161,6 @@ class Player extends GameUnit
 	    this.takeDamage(10)
 	}
 
-	if (this.placementDelay > 0) {
-		this.placementDelay -= 1
-	}
-
 	let dirvec = new THREE.Vector3()
 	this.controls.getDirection(dirvec)
 	let key_cast = new THREE.Raycaster( new THREE.Vector3(), dirvec, 0, 5)
@@ -178,8 +173,7 @@ class Player extends GameUnit
 			return item.name == intersects[0].object.name
 		})
 		if ( keyPart ) {
-			if (keyboard.pressed("E") && this.placementDelay <= 0) {
-				this.placementDelay = 30
+			if (keyboard.pressed("E")) {
 				console.log(keyPart);
 				console.log(intersects);
 				this.placeKeyPart(scene, keyPart, intersects[0].object)

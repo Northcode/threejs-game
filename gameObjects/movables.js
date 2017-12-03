@@ -74,18 +74,24 @@ class Door extends GameObject {
 
 		this.startpos = zero_vec.clone()
 		this.endpos = zero_vec.clone()
-		this.tweenpos = zero_vec.clone()
+		this.tweenpos = { x: 0, y: 0, z: 0, w: 1, h: 1, d: 1}
 		this.duration = 4000
 	}
 
 	build_tween(){
 		console.log("Moving door");
+		this.tweenpos.x = this.startpos.x
+		this.tweenpos.y = this.startpos.y
+		this.tweenpos.z = this.startpos.z
+
+		this.tweento = { x: this.endpos.x, y: this.endpos.y, z: this.endpos.z, w: 0.95, h: 0.95, d: 0.95 }
 		let tween = new TWEEN.Tween(this.tweenpos)
-				.to(this.endpos, this.duration)
+				.to(this.tweento, this.duration)
 				.easing(TWEEN.Easing.Quadratic.In)
 				.onUpdate( () =>{
 					this.model.position.copy(this.tweenpos)
 					this.model.__dirtyPosition = true
+					this.model.scale.set(this.tweenpos.w, this.tweenpos.h, this.tweenpos.d)
 				})
 				.start()
 	}
