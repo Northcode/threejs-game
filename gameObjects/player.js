@@ -69,6 +69,7 @@ class Player extends GameUnit
     die(){
 	this.lives -= 1
 	if (this.lives <= 0) {
+		document.getElementById('instructions').innerHTML = "Game Over!</br>Click anywhere to restart"
 	    document.exitPointerLock();
 	}
 	super.die()

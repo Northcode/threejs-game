@@ -128,7 +128,6 @@
 
 		<div id="blocker">
 			<div id="instructions">
-				Click anywhere on the screen to begin
 			</div>
 		</div>
 		<div id="crosshair">
@@ -174,6 +173,7 @@
 	 let clock = new THREE.Clock();
 	 let screenBlocker = document.getElementById('blocker')
 	 let instructions = document.getElementById('instructions')
+	 instructions.innerHTML = "Click anywhere on the screen to begin"
 
 	 let paused = false
 
@@ -344,6 +344,9 @@
 	 }, () => {
 	     camera_controls.enabled = false;
 	     screenBlocker.style.display = 'block'
+		 if (scene.player.lives > 0) {
+			 document.getElementById('instructions').innerHTML = "Paused</br>Click to continue"
+		 }
 	     /* instructions.style.display = 'instructions'*/
 		 paused = true
 	     physLoop.stop()
