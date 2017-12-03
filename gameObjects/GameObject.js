@@ -192,14 +192,16 @@ class GameUnit extends GameObject
 	    this.movement.stunned -= 1
 	}
 
-	if (!this.isDead && this.movement.stunned <= 0) {
-	    this.model.setLinearVelocity(this.movement.velocity)
-	    this.model.setAngularFactor(zero_vec)
-	} else {
-	    let oldy = old_velocity.y
-	    old_velocity.multiplyScalar(0.98)
-	    old_velocity.y = oldy
-	    this.model.setLinearVelocity(old_velocity)
+	if (!this.isDead) {
+	    if (this.movement.stunned <= 0) {
+		this.model.setLinearVelocity(this.movement.velocity)
+		this.model.setAngularFactor(zero_vec)
+	    } else {
+		let oldy = old_velocity.y
+		old_velocity.multiplyScalar(0.98)
+		old_velocity.y = oldy
+		this.model.setLinearVelocity(old_velocity)
+	    }
 	}
 
 

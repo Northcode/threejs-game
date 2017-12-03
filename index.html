@@ -149,6 +149,7 @@
 		<script src="gameObjects/enemies.js"></script>
 		<script src="gameObjects/items.js"></script>
 		<script src="gameObjects/map.js"></script>
+		<script src="gameObjects/levelmanager.js"></script>
 
 		<div id="hud">
 			<div id="hp">
@@ -206,55 +207,7 @@
 	 renderer.gammaInput = true
 	 renderer.gammaOutput = true
 
-	 // LIGHTING
-	 let light = new THREE.DirectionalLight(0xaa7777, 1, 100)
-	 light.position.set(60,60,30)
-	 light.target.position.set(4*8,6*3,4*8)
-
-	 light.shadow.mapSize.width = shadowMapRes
-	 light.shadow.mapSize.height = shadowMapRes
-	 light.shadow.camera.left = -200
-	 light.shadow.camera.right = 200
-	 light.shadow.camera.top = 200
-	 light.shadow.camera.bottom = -200
-	 light.shadow.camera.near = 1
-	 light.shadow.camera.far = 150
-	 light.shadow.bias = 0.0001
-	 light.castShadow = true
-
-	 let light_helper = new THREE.DirectionalLightHelper(light, 5)
-	 scene.add(light_helper)
-
-	 scene.castray = false
-
-
-	 /* let shadow_helper = new THREE.CameraHelper(light.shadow.camera)
-	    scene.add(shadow_helper)
-	  */
-
-	 let light2 = new THREE.PointLight(0xff0000, 1, 100, 4)
-	 light2.position.set(4*8,4*6,4*8)
-	 /* light2.target.position.set(0,0,0)
-	  */
-	 light2.shadow.mapSize.width = shadowMapRes
-	 light2.shadow.mapSize.height = shadowMapRes
-	 light2.shadow.camera.left = -200
-	 light2.shadow.camera.right = 200
-	 light2.shadow.camera.top = 200
-	 light2.shadow.camera.bottom = -200
-	 light2.shadow.camera.near = 1
-	 light2.shadow.camera.far = 150
-	 light2.castShadow = true
-
-	 let light2_helper = new THREE.PointLightHelper(light2, 5)
-	 scene.add(light2_helper)
-
-	 // AMBIENT LIGHT
-	 let ambient = new THREE.AmbientLight(0x222222)
-
-	 scene.add(light)
-	 /* scene.add(light2)*/
-	 scene.add(ambient)
+	 let levelmanager = new LevelManager()
 
 	 //
 	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
@@ -263,9 +216,7 @@
 	 // KEYBOARD
 	 let keyboard = new THREEx.KeyboardState()
 
-	 let player_startpos = new THREE.Vector3(16,30,16)
-
-	 generate_map_from(
+	 levelmanager.add_level(
 	     `0
 ##########
 #####    #
@@ -316,24 +267,7 @@
 #   ##   #
 #        #
 ########D#
-	     `,
-	     scene, gameobjects, (startpos) => player_startpos = startpos)
-
-// generate_map_from(
-// 	`0
-// #####
-// #####
-// #####
-// #####
-// #####
-// 1
-// #####
-// #  S#
-// #cDc#
-// #ccc#
-// #####
-// 	`,
-// 	scene, gameobjects, (startpos) => player_startpos = startpos)
+	     `)
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
 
@@ -354,19 +288,10 @@
 	     physLoop.stop()
 	     console.log(physLoop.isRunning())
 	 }, () => {
-	     player.onclick(keyboard, scene)
+	     scene.player.onclick(keyboard, scene)
 	 });
 
-	 let player = new Player(camera_controls)
-	 scene.player = player
-	 gameobjects.push(player)
-	 player.spawnpoint = player_startpos
-	 player.respawn()
-	 scene.add(player.model)
-
-	 // ORBIT CONTROLS
-	 /* let controls = new THREE.OrbitControls( camera, renderer.domElement )
-	    scene.add(camera)*/
+	 levelmanager.load_level(0, scene, gameobjects, camera_controls)
 
 	 // ANIM LOOP
 	 const animate = () => {
