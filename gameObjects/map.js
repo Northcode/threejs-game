@@ -132,19 +132,25 @@ class ZombiePart extends Part
 }
 
 let keyColors = [0x3BFF21, 0xE8B71E, 0xFF472D, 0x741EE8, 0x5AEBFF]
+let keyPartsP = load_object('assets/models/compleateCircleKey.json')
 
 let keyParts = []
 let doorKey = []
-let keyPartsLoadedP = new Promise((resolve, reject) => {
-let keyPartsP = load_object('assets/models/compleateCircleKey.json')
-    let allKeyParts = keyPartsP.then(object => {
-	for (child of object.children){
-		keyParts.push(child)
-	    doorKey.push(child.clone())
-	}
-	resolve(keyParts)
+let keyPartsLoadedP = undefined
+
+const load_key = () => {
+    keyPartsLoadedP = new Promise((resolve, reject) => {
+	let allKeyParts = keyPartsP.then(object => {
+	    while(keyParts.pop()) {}
+	    while(doorKey.pop()) {}
+	    for (child of object.children){
+		keyParts.push(child.clone())
+		doorKey.push(child.clone())
+	    }
+	    resolve(keyParts)
+	})
     })
-})
+}
 
 class CubeItemPart extends Part
 {
@@ -282,6 +288,9 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 
 const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 
+    while (movingplatform_points.pop()) {}
+    load_key()
+
     let lines = str.split("\n")
     let x = 0,y = 0,z = 0
 
@@ -325,4 +334,8 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
     // floor.position.set(height / 2 - 4,-5,width / 2 + 4)
 
     // scene.add(floor)
+}
+
+const reset_map_gen = () => {
+    
 }
