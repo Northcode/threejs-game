@@ -194,6 +194,19 @@
 	 // SOUND
 	 let audioListener = new THREE.AudioListener()
 	 camera.add(audioListener)
+	 let audioLoader = new THREE.AudioLoader()
+
+	 let backgroundmusic = new THREE.Audio(audioListener)
+	 audioLoader.load('assets/music/177830__trebblofang__horror-atmosphere-background.flac', buffer =>{
+		 backgroundmusic.setBuffer(buffer)
+		 backgroundmusic.setVolume(0.6)
+	 })
+
+	 let zombiehurtsound = new THREE.Audio(audioListener)
+	 audioLoader.load('assets/music/350919__cabled-mess__hurt-c-05.wav', buffer =>{
+		 zombiehurtsound.setBuffer(buffer)
+		 zombiehurtsound.setVolume(0.8)
+	 })
 
 	 // RENDERER
 	 let renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -272,10 +285,14 @@
 	 let camera_controls = new THREE.PointerLockControls(camera)
 
 	 setup_pointer_lock(() => {
+		 if (scene.player.lives <= 0) {
+		 	levelmanager.load_level(0, scene, gameobjects, camera_controls)
+		 }
 	     camera_controls.enabled = true;
 		 screenBlocker.style.display = 'none'
 	     scene.onSimulationResume()
 		 paused = false
+		 backgroundmusic.play()
 		 physLoop.start()
 	 }, () => {
 	     camera_controls.enabled = false;
@@ -285,6 +302,7 @@
 		 }
 	     /* instructions.style.display = 'instructions'*/
 		 paused = true
+		 backgroundmusic.pause()
 	     physLoop.stop()
 	     console.log(physLoop.isRunning())
 	 }, () => {

@@ -22,11 +22,15 @@ class Player extends GameUnit
 	this.hitbar = document.getElementById("health")
 
 	this.gunSound = new THREE.Audio(audioListener)
-	let audioLoader = new THREE.AudioLoader()
-
 	audioLoader.load('assets/music/pew.mp3', buffer => {
 		this.gunSound.setBuffer(buffer)
 		this.gunSound.setVolume(0.6)
+	})
+
+	this.hurtsound = new THREE.Audio(audioListener)
+	audioLoader.load('assets/music/deh!.mp3', buffer => {
+		this.hurtsound.setBuffer(buffer)
+		this.hurtsound.setVolume(0.8)
 	})
 
 	load_object("assets/models/characterBase.json").then(object => {
@@ -67,6 +71,7 @@ class Player extends GameUnit
     takeDamage(damage, direction){
 	super.takeDamage(damage,direction)
 	this.hitbar.value = this.hp
+	// this.hurtsound.play()
     }
 
     die(){

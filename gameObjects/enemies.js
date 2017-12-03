@@ -16,10 +16,18 @@ class Zombie extends GameUnit
 			this.model.add(object)
 			this.name = "zombie"
 			this.stuntime = 20
+
 		})
 		this.movespeed = 5
-
 	}
+
+	takeDamage(damage, direction){
+		if (this.movement.stunned ==0) {
+			zombiehurtsound.play()
+		}
+		super.takeDamage(damage, direction)
+	}
+
 	die(){
 		if (!this.isDead) {
 			setTimeout(this.respawn.bind(this), 5000)
