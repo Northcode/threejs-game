@@ -14,6 +14,7 @@ class Zombie extends GameUnit
 			object.scale.set(2,2,2)
 			this.object = object
 			this.model.add(object)
+			this.name = "zombie"
 		})
 		this.movespeed = 5
 
@@ -29,7 +30,7 @@ class Zombie extends GameUnit
 	this.resetMovement()
 
 	this.rotationMatrix.extractRotation(this.model.matrix)
-	
+
 	// console.log(scene.player.model.position.clone())
 	if (!this.isDead) {
 	    this.lookAt(scene.player.model.position.clone())
@@ -44,7 +45,7 @@ class Zombie extends GameUnit
 	    if (intersections.length > 0) {
 		this.forward()
 	    }
-	    
+
 	}
 
 	super.update(keyboard, scene)

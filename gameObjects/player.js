@@ -15,6 +15,7 @@ class Player extends GameUnit
 	this.inventory = []
 
 	this.lives = 5
+	this.gunDamage = 25
 
 	this.hitbar = document.getElementById("health")
 
@@ -106,6 +107,12 @@ class Player extends GameUnit
 		    this.bullet.position.copy(this.bullet.tweenpos)
 		})
 		.onComplete(() => {
+			if ('entity' in intersects[0].object) {
+				if (intersects[0].object.entity.name == "zombie") {
+					console.log(intersects[0].object.entity.object);
+					intersects[0].object.entity.takeDamage(this.gunDamage, dirvec)
+				}
+			}
 		    scene.remove(this.bullet)
 		    console.log("Pew done!")
 		})

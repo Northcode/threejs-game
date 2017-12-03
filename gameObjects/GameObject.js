@@ -33,6 +33,7 @@ class GameUnit extends GameObject
 	this.spawnpoint = new THREE.Vector3(0,30,0)
 	this.hp = 100
 	this.isDead = false
+	this.model.entity = this
     }
 
     forward() {
