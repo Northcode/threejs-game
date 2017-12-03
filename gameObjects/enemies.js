@@ -23,7 +23,13 @@ class Zombie extends GameUnit
 		if (!this.isDead) {
 			setTimeout(this.respawn.bind(this), 5000)
 			this.isDead = true
+			scene.remove(this.model)
 		}
+	}
+
+	respawn(){
+		scene.add(this.model)
+		super.respawn()
 	}
 
     update(keyboard, scene) {
