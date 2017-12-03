@@ -208,6 +208,12 @@
 		 playerhurtsound.setBuffer(buffer)
 	 })
 
+	 let pickupsound = new THREE.Audio(audioListener)
+	 audioLoader.load('assets/music/ba-ding.mp3', buffer => {
+	 	pickupsound.setBuffer(buffer)
+		pickupsound.setVolume(0.6)
+	 })
+
 	 let zombiehurtsound = new THREE.Audio(audioListener)
 	 audioLoader.load('assets/music/350919__cabled-mess__hurt-c-05.wav', buffer =>{
 		 zombiehurtsound.setBuffer(buffer)

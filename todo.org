@@ -1,20 +1,20 @@
 * Shit todo
 * DONE Player movement
-* TODO Level structure
+* DONE Level structure
 ** DONE Level generation
 ** TODO Build first and second level (third?)
 * TODO Enemies
 ** DONE Enemy model and animation
 ** TODO Texture
 ** Movement [/]
-*** DONE Basic 
+*** DONE Basic
 *** TODO Pathfinding
 ** TODO Turrets
-** TODO Combat logic
-* TODO Pickuppables
-* TODO Build bridge / stairs / watever
-* TODO Combat system
-* TODO HUD
-* TODO Music
-** TODO Background music
-** TODO Sound effects
+** DONE Combat logic
+* DONE Pickuppables
+* DONE Build bridge / stairs / watever (puzzle key)
+* DONE Combat system
+* DONE HUD
+* DONE Music
+** DONE Background music
+** DONE Sound effects

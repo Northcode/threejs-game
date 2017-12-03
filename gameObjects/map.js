@@ -178,6 +178,7 @@ class CubeItemPart extends Part
 		scene.remove(item.model)
 		scene.player.pickup_item(item)
 		scene.player.update_inventory()
+		pickupsound.play()
 	    }
 	})
 	gameobjects.push(item)
@@ -320,7 +321,7 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 
 
     scene.ground = []
-    
+
     let lines = str.split("\n")
     let x = 0,y = 0,z = 0
 
@@ -367,5 +368,5 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
 }
 
 const reset_map_gen = () => {
-    
+
 }
