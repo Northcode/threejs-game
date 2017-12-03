@@ -12,6 +12,8 @@ class Player extends GameUnit
 	this.sprintspeed = 20
 	this.jumppower = 15
 
+	this.model.name = "player"
+
 	this.inventory = []
 
 	this.lives = 5
@@ -167,6 +169,11 @@ class Player extends GameUnit
 	}
 	if (keyboard.pressed("M")) {
 	    this.takeDamage(10)
+	}
+	if (keyboard.pressed("R")) {
+		scene.castray = true
+	}else {
+		scene.castray = false
 	}
 
 	let dirvec = new THREE.Vector3()

@@ -52,6 +52,27 @@ class Zombie extends GameUnit
 		this.forward()
 	    }
 
+		let hitrayvec = zero_vec.clone()
+		hitrayvec.subVectors(scene.player.model.position.clone(), this.model.position.clone())
+		hitrayvec.normalize()
+
+		let hitraycaster = new THREE.Raycaster(new THREE.Vector3(), hitrayvec, 0, 3)
+		let hitrayorigin = this.model.position.clone()
+		hitrayorigin.y += 1.7
+		hitraycaster.ray.origin.copy(hitrayorigin)
+		let hitintersectiuons = hitraycaster.intersectObjects(scene.children)
+
+		if (scene.castray) {
+			let arrow = new THREE.ArrowHelper(hitrayvec, hitrayorigin, 5, 0x0000ff )
+			scene.add(arrow)
+		}
+
+		if (hitintersectiuons.length > 0) {
+			if (hitintersectiuons[0].object.name == "player") {
+				scene.player.takeDamage(10, hitrayvec)
+			}
+		}
+
 	}
 
 	super.update(keyboard, scene)
