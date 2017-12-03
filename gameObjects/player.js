@@ -69,9 +69,11 @@ class Player extends GameUnit
 	}
 
     takeDamage(damage, direction){
+		if (this.movement.stunned <= 0) {
+			playerhurtsound.play()
+		}
 	super.takeDamage(damage,direction)
 	this.hitbar.value = this.hp
-	// this.hurtsound.play()
     }
 
     die(){
