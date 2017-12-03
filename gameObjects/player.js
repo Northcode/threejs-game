@@ -168,7 +168,7 @@ class Player extends GameUnit
 	    this.jump()
 	}
 	if (keyboard.pressed("M")) {
-	    this.takeDamage(10)
+	    this.takeDamage(10, zero_vec.clone())
 	}
 	if (keyboard.pressed("R")) {
 		scene.castray = true

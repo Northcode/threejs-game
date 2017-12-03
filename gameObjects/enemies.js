@@ -15,6 +15,7 @@ class Zombie extends GameUnit
 			this.object = object
 			this.model.add(object)
 			this.name = "zombie"
+			this.stuntime = 20
 		})
 		this.movespeed = 5
 

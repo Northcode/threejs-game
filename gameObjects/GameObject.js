@@ -34,6 +34,9 @@ class GameUnit extends GameObject
 	this.hp = 100
 	this.isDead = false
 	this.model.entity = this
+	this.stuntime = 30
+	this.knockbackmulti = 8
+	this.movement.knockback = zero_vec.clone()
     }
 
     forward() {
@@ -67,10 +70,13 @@ class GameUnit extends GameObject
     takeDamage(damage,direction){
 	if (this.movement.stunned == 0) {
 	    this.hp -= damage
+		this.movement.knockback.x = (direction.x * this.knockbackmulti)
+		this.movement.knockback.y = (direction.y * this.knockbackmulti) + this.knockbackmulti
+		this.movement.knockback.z = (direction.z * this.knockbackmulti)
 	    if (this.hp <= 0) {
 		this.die()
 	    } else {
-		this.movement.stunned = 10
+		this.movement.stunned = this.stuntime
 	    }
 	}
     }
@@ -193,15 +199,20 @@ class GameUnit extends GameObject
 	}
 
 	if (!this.isDead) {
-	    if (this.movement.stunned <= 0) {
-		this.model.setLinearVelocity(this.movement.velocity)
-		this.model.setAngularFactor(zero_vec)
-	    } else {
-		let oldy = old_velocity.y
-		old_velocity.multiplyScalar(0.98)
-		old_velocity.y = oldy
-		this.model.setLinearVelocity(old_velocity)
-	    }
+		if (this.movement.stunned <= 0) {
+			this.model.setLinearVelocity(this.movement.velocity)
+			this.model.setAngularFactor(zero_vec)
+		} else {
+			let oldy = old_velocity.y
+			old_velocity.multiplyScalar(0.98)
+			old_velocity.y = oldy
+			if (this.movement.knockback.length() != 0) {
+				this.model.setLinearVelocity(this.movement.knockback)
+				this.movement.knockback = zero_vec.clone()
+			} else{
+				this.model.setLinearVelocity(old_velocity)
+			}
+		}
 	}
 
 
