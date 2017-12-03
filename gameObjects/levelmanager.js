@@ -58,6 +58,9 @@ class LevelManager
 	while (scene.children.length > 0) {
 	    scene.remove(scene.children[0])
 	}
-	while (gameobjects.pop()) {}
+	let it = undefined
+	while ((it = gameobjects.pop()) != undefined) {
+	    it.destroy()
+	}
     }
 }

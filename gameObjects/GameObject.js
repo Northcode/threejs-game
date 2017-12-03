@@ -3,6 +3,8 @@ class GameObject
     constructor() {
     }
 
+    destroy() {}
+    
     animate(delta) {
     }
 
@@ -34,7 +36,7 @@ class GameUnit extends GameObject
 	this.hp = 100
 	this.isDead = false
 	this.model.entity = this
-	this.stuntime = 30
+	this.stuntime = 50
 	this.knockbackmulti = 8
 	this.movement.knockback = zero_vec.clone()
     }
@@ -199,7 +201,7 @@ class GameUnit extends GameObject
 	}
 
 	if (!this.isDead) {
-		if (this.movement.stunned <= 0) {
+		if (this.movement.stunned <= this.stuntime - 10) {
 			this.model.setLinearVelocity(this.movement.velocity)
 			this.model.setAngularFactor(zero_vec)
 		} else {

@@ -21,8 +21,12 @@ class Zombie extends GameUnit
 		this.movespeed = 5
 	}
 
+    destroy() {
+	clearTimeout(this.respawntimer)
+    }
+
 	takeDamage(damage, direction){
-		if (this.movement.stunned ==0) {
+		if (this.movement.stunned == 0) {
 			zombiehurtsound.play()
 		}
 		super.takeDamage(damage, direction)
@@ -30,7 +34,7 @@ class Zombie extends GameUnit
 
 	die(){
 		if (!this.isDead) {
-			setTimeout(this.respawn.bind(this), 5000)
+			this.respawntimer = setTimeout(this.respawn.bind(this), 5000)
 			this.isDead = true
 			scene.remove(this.model)
 		}
