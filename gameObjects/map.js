@@ -52,6 +52,7 @@ class Block extends SizedPart
 	    box.receiveShadow = true
 	    box.position.copy(get_grid_pos(this.x,this.y,this.z))
 	    box.add(shadowCaster)
+	    scene.ground.push(box)
 	    scene.add(box)
 	})
     }
@@ -67,6 +68,7 @@ class Roof extends Part
 	box.castShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
 	box.position.y += 2.75
+	scene.ground.push(box)
 	scene.add(box)
     }
 }
@@ -80,6 +82,7 @@ class Platform extends Part
 
 	box.castShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
+	scene.ground.push(box)
 	scene.add(box)
     }
 }
@@ -94,6 +97,7 @@ class SmallPlatform extends Part
 	box.castShadow = true
 	box.position.copy(get_grid_pos(this.x,this.y,this.z))
 	box.position.y -= 3.25
+	scene.ground.push(box)
 	scene.add(box)
     }
 }
@@ -114,6 +118,7 @@ class Stairs extends Part
 	    stair.position.copy(get_grid_pos(this.x,this.y,this.z))
 	    stair.position.y -= 0.5
 	    // stair.translateZ(0.1)
+	    scene.ground.push(stair)
 	    scene.add(stair)
 	})
     }
@@ -192,6 +197,7 @@ class MovingPlatformPart extends Part
 	console.log("Built moving platform between: " + vec_to_str(start_point) + " and: " + vec_to_str(platform.endpos))
 	platform.rebuild_tween()
 	gameobjects.push(platform)
+	scene.ground.push(platform.model)
 	scene.add(platform.model)
     }
 }
@@ -206,6 +212,23 @@ class FinishDoor extends Part {
 		gameobjects.push(door)
 		scene.add(door.model)
 	}
+}
+
+class ExitPart extends Part {
+    build (scene, gameobjects) {
+	let box = new Physijs.BoxMesh(
+	    new THREE.BoxGeometry(8,6,8),
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
+	box.position.copy(get_grid_pos(this.x,this.y,this.z))
+
+	box.addEventListener("collision", (other, relative_velocity, contact_normal) => {
+	    if (other == scene.player.model) {
+		scene.nextlevel()
+	    }
+	})
+
+	scene.add(box)
+    }
 }
 
 let lastblock = undefined
@@ -279,6 +302,10 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 	let part = new FinishDoor(x,y,z, 0x0000ff)
 	part.build(scene, gameobjects)
     } break
+    case 'E': {
+	let part = new ExitPart(x,y,z, 0x000000)
+	part.build(scene,gameobjects)
+    } break
     }
     if (tmp && lastblock != undefined) {
 	lastblock.build(scene)
@@ -291,6 +318,9 @@ const generate_map_from = (str,scene, gameobjects,startpos_f) => {
     while (movingplatform_points.pop()) {}
     load_key()
 
+
+    scene.ground = []
+    
     let lines = str.split("\n")
     let x = 0,y = 0,z = 0
 

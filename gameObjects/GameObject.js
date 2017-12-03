@@ -181,7 +181,7 @@ class GameUnit extends GameObject
 
 	let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 3 )
 	raycaster.ray.origin.copy( this.model.position )
-	let intersections = raycaster.intersectObjects( scene.children )
+	let intersections = raycaster.intersectObjects( scene.ground )
 
 	if (intersections.length > 0) {
 	    if (intersections[0].object.movable === true) {

@@ -286,6 +286,60 @@
 #   ##   #
 #        #
 ########D#
+        E
+	     `)
+
+	 levelmanager.add_level(
+	     `0
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+1
+##########
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+#       S#
+##########
+2
+##########
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+##########
+3
+##########
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+##########
+4
+##########
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+#        #
+##########
 	     `)
 
 	 let camera_controls = new THREE.PointerLockControls(camera)
@@ -314,6 +368,12 @@
 	 }, () => {
 	     scene.player.onclick(keyboard, scene)
 	 });
+
+	 scene.currentlevel = 0
+	 scene.nextlevel = () => {
+	     scene.currentlevel++
+	     levelmanager.load_level(scene.currentlevel, scene, gameobjects, camera_controls)
+	 }
 
 	 levelmanager.load_level(0, scene, gameobjects, camera_controls)
 
