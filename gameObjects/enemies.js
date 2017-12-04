@@ -1,49 +1,48 @@
 class Zombie extends GameUnit
 {
     constructor(){
-		super(new Physijs.CapsuleMesh(
-			new THREE.CylinderGeometry(1,1,4,32),
-			Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
-		this.model.setAngularFactor(new THREE.Vector3(0,0,0))
-		load_object("assets/models/characterBase.json").then(object => {
-			/*let mesh = new THREE.Mesh(
-				geometry,
-				new THREE.MeshStandardMaterial({ color: 0xffffff })
-			)*/
-			this.animationMixer = new THREE.AnimationMixer( object )
-			object.scale.set(2,2,2)
-			this.object = object
-			this.model.add(object)
-			this.name = "zombie"
-			this.stuntime = 20
+	super(new Physijs.CapsuleMesh(
+	    new THREE.CylinderGeometry(1,1,4,32),
+	    Physijs.createMaterial(new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0}), 0.3, 0.3), 1))
+	this.model.setAngularFactor(new THREE.Vector3(0,0,0))
+	load_object("assets/models/characterBase.json").then(object => {
+	    this.animationMixer = new THREE.AnimationMixer( object )
+	    object.scale.set(2,2,2)
+	    this.object = object
+	    this.model.add(object)
+	    this.name = "zombie"
+	    this.stuntime = 20
 
-		})
-		this.movespeed = 5
-	}
+	})
+	this.movespeed = 5
+
+	this.hittimer = 3
+	this.moveforward = false
+    }
 
     destroy() {
 	clearTimeout(this.respawntimer)
     }
 
-	takeDamage(damage, direction){
-		if (this.movement.stunned == 0) {
-			zombiehurtsound.play()
-		}
-		super.takeDamage(damage, direction)
+    takeDamage(damage, direction){
+	if (this.movement.stunned == 0) {
+	    zombiehurtsound.play()
 	}
+	super.takeDamage(damage, direction)
+    }
 
-	die(){
-		if (!this.isDead) {
-			this.isDead = true
-			scene.remove(this.model)
-		    scene.numberofenemies--
-		}
+    die(){
+	if (!this.isDead) {
+	    this.isDead = true
+	    scene.remove(this.model)
+	    scene.numberofenemies--
 	}
+    }
 
-	respawn(){
-		scene.add(this.model)
-		super.respawn()
-	}
+    respawn(){
+	scene.add(this.model)
+	super.respawn()
+    }
 
     update(keyboard, scene) {
 	this.resetMovement()
@@ -53,16 +52,21 @@ class Zombie extends GameUnit
 	if (!this.isDead) {
 	    this.lookAt(scene.player.model.position.clone())
 
-	    let rayvec = new THREE.Vector3(0,-1,-0.5)
-	    rayvec.applyMatrix4(this.rotationMatrix)
-
-	    let raycaster = new THREE.Raycaster( this.model.position.clone(), rayvec, 0, 5 )
-	    let intersections = raycaster.intersectObjects( scene.children )
-
-	    if (intersections.length > 0) {
+	    if (this.moveforward) {
 		this.forward()
 	    }
 
+	    if (this.hittimer <= 0) {
+		this.hittimer = 8
+
+		let rayvec = new THREE.Vector3(0,-1,-0.5)
+		rayvec.applyMatrix4(this.rotationMatrix)
+
+		let raycaster = new THREE.Raycaster( this.model.position.clone(), rayvec, 0, 5 )
+		let intersections = raycaster.intersectObjects( scene.children )
+
+		this.moveforward = intersections.length > 0
+		
 		let hitrayvec = zero_vec.clone()
 		hitrayvec.subVectors(scene.player.model.position.clone(), this.model.position.clone())
 		hitrayvec.normalize()
@@ -73,15 +77,19 @@ class Zombie extends GameUnit
 		let hitintersectiuons = hitraycaster.intersectObjects(scene.children)
 
 		if (scene.castray) {
-			let arrow = new THREE.ArrowHelper(hitrayvec, hitrayorigin, 5, 0x0000ff )
-			scene.add(arrow)
+		    let arrow = new THREE.ArrowHelper(hitrayvec, hitrayorigin, 5, 0x0000ff )
+		    scene.add(arrow)
 		}
 
 		if (hitintersectiuons.length > 0) {
-			if (hitintersectiuons[0].object.name == "player") {
-				scene.player.takeDamage(10, hitrayvec)
-			}
+		    if (hitintersectiuons[0].object.name == "player") {
+			scene.player.takeDamage(10, hitrayvec)
+		    }
 		}
+
+	    } else {
+		this.hittimer--
+	    }
 
 	}
 
