@@ -98,8 +98,7 @@ class Player extends GameUnit
     shootBullet(scene) {
 	let dirvec = new THREE.Vector3()
 	this.controls.getDirection(dirvec)
-	let bullet_cast = new THREE.Raycaster( new THREE.Vector3(), dirvec, 0, 80)
-	bullet_cast.ray.origin.copy(this.model.position)
+	let bullet_cast = new THREE.Raycaster(this.model.position.clone(), dirvec, 0, 80)
 	bullet_cast.ray.origin.y += 1.7
 	let intersects = bullet_cast.intersectObjects(scene.children)
 	if (intersects.length > 0) {
@@ -185,8 +184,7 @@ class Player extends GameUnit
 
 	let dirvec = new THREE.Vector3()
 	this.controls.getDirection(dirvec)
-	let key_cast = new THREE.Raycaster( new THREE.Vector3(), dirvec, 0, 5)
-	key_cast.ray.origin.copy(this.model.position)
+	let key_cast = new THREE.Raycaster(this.model.position.clone(), dirvec, 0, 5)
 	key_cast.ray.origin.y += 1.7
 	let intersects = key_cast.intersectObjects(doorKey)
 	if (intersects.length > 0) {

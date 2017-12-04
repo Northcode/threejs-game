@@ -34,9 +34,9 @@ class Zombie extends GameUnit
 
 	die(){
 		if (!this.isDead) {
-			this.respawntimer = setTimeout(this.respawn.bind(this), 5000)
 			this.isDead = true
 			scene.remove(this.model)
+		    scene.numberofenemies--
 		}
 	}
 
@@ -57,8 +57,7 @@ class Zombie extends GameUnit
 	    let rayvec = new THREE.Vector3(0,-1,-0.5)
 	    rayvec.applyMatrix4(this.rotationMatrix)
 
-	    let raycaster = new THREE.Raycaster( new THREE.Vector3(), rayvec, 0, 5 )
-	    raycaster.ray.origin.copy( this.model.position )
+	    let raycaster = new THREE.Raycaster( this.model.position.clone(), rayvec, 0, 5 )
 	    let intersections = raycaster.intersectObjects( scene.children )
 
 	    if (intersections.length > 0) {
@@ -69,10 +68,9 @@ class Zombie extends GameUnit
 		hitrayvec.subVectors(scene.player.model.position.clone(), this.model.position.clone())
 		hitrayvec.normalize()
 
-		let hitraycaster = new THREE.Raycaster(new THREE.Vector3(), hitrayvec, 0, 3)
 		let hitrayorigin = this.model.position.clone()
 		hitrayorigin.y += 1.7
-		hitraycaster.ray.origin.copy(hitrayorigin)
+		let hitraycaster = new THREE.Raycaster(hitrayorigin, hitrayvec, 0, 3)
 		let hitintersectiuons = hitraycaster.intersectObjects(scene.children)
 
 		if (scene.castray) {
@@ -89,5 +87,35 @@ class Zombie extends GameUnit
 	}
 
 	super.update(keyboard, scene)
+    }
+}
+
+class ZombieSpawner extends GameObject
+{
+    constructor(position,scene, gameobjects) {
+	super()
+	this.position = position
+	this.scene = scene
+	this.gameobjects = gameobjects
+	this.sincelastspawn = 0
+    }
+
+    spawn_zombie() {
+	let zombie = new Zombie()
+	zombie.model.position.copy(this.position)
+	zombie.spawnpoint.copy(zombie.model.position)
+
+	this.gameobjects.push(zombie)
+	this.scene.add(zombie.model)
+	scene.numberofenemies++
+    }
+
+    update(keyboard, scene) {
+	if (this.sincelastspawn <= 0 && scene.numberofenemies < scene.maxenemies) {
+	    this.spawn_zombie()
+	    this.sincelastspawn = 200
+	} else {
+	    this.sincelastspawn--
+	}
     }
 }

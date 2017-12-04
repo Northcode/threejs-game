@@ -127,12 +127,8 @@ class Stairs extends Part
 class ZombiePart extends Part
 {
     build(scene,gameobjects) {
-	let zombie = new Zombie()
-	zombie.model.position.copy(get_grid_pos(this.x, this.y, this.z))
-	zombie.spawnpoint.copy(zombie.model.position)
-
-	gameobjects.push(zombie)
-	scene.add(zombie.model)
+	let spawner = new ZombieSpawner(get_grid_pos(this.x,this.y,this.z), scene, gameobjects)
+	gameobjects.push(spawner)
     }
 }
 

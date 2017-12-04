@@ -181,8 +181,7 @@ class GameUnit extends GameObject
 	this.movement.velocity.applyMatrix4(this.rotationMatrix)
 	this.movement.velocity.y = old_velocity.y
 
-	let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 3 )
-	raycaster.ray.origin.copy( this.model.position )
+	let raycaster = new THREE.Raycaster( this.model.position, new THREE.Vector3( 0, - 1, 0 ), 0, 3 )
 	let intersections = raycaster.intersectObjects( scene.ground )
 
 	if (intersections.length > 0) {
