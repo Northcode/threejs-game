@@ -47,7 +47,6 @@ class MovingPlatform extends GameObject
 	this.model.setAngularFactor(zero_vec)
 	this.model.position.copy(this.tweenpos)
 	this.model.__dirtyPosition = true
-	// console.log("platform vel: " + vec_to_str(this.velocity))
     }
 }
 
@@ -60,7 +59,6 @@ class Door extends GameObject {
 			Physijs.createMaterial(new THREE.MeshStandardMaterial({ color: this.color }), 0.3,0.3), 0)
 		keyPartsLoadedP.then(object => {
 			for (let doorKeyPart of doorKey){
-				console.log(doorKeyPart.color);
 				let color = get_key_color(doorKeyPart)
 				doorKeyPart.translateZ(4)
 				doorKeyPart.material = new THREE.MeshStandardMaterial( {
@@ -79,7 +77,6 @@ class Door extends GameObject {
 	}
 
 	build_tween(){
-		console.log("Moving door");
 		this.tweenpos.x = this.startpos.x
 		this.tweenpos.y = this.startpos.y
 		this.tweenpos.z = this.startpos.z

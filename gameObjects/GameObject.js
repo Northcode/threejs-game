@@ -97,8 +97,6 @@ class GameUnit extends GameObject
 	this.model.setLinearVelocity(this.movement.velocity)
 	this.model.position.copy(this.spawnpoint)
 	this.model.__dirtyPosition = true
-	console.log(this.movement.velocity)
-	console.log(this.model.getLinearVelocity())
     }
 
     lookAt(position) {
@@ -107,7 +105,6 @@ class GameUnit extends GameObject
 	vec.normalize()
 	let yRot = Math.atan2(vec.x, vec.z) + Math.PI
 	let zRot = -Math.asin(vec.y)
-	// console.log("rotation to: " + yRot)
 	this.model.rotation.set(0, yRot, 0)
 	this.model.__dirtyRotation = true
     }

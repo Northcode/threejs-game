@@ -108,7 +108,6 @@ class Player extends GameUnit
 	    this.bullet.target = intersects[0].point
 	    this.bullet.position.copy(bullet_cast.ray.origin)
 	    this.bullet.tweenpos = this.bullet.position.clone()
-	    // console.log("bullet from: " + vec_to_str(bullet_cast.ray.origin) + " to: " + vec_to_str(this.bullet.target))
 	    this.bullet.tween = new TWEEN.Tween(this.bullet.tweenpos)
 		.to(this.bullet.target, 200)
 		.onUpdate(() => {
@@ -117,12 +116,10 @@ class Player extends GameUnit
 		.onComplete(() => {
 			if ('entity' in intersects[0].object) {
 				if (intersects[0].object.entity.name == "zombie") {
-					console.log(intersects[0].object.entity.object);
 					intersects[0].object.entity.takeDamage(this.gunDamage, dirvec)
 				}
 			}
 		    scene.remove(this.bullet)
-		    console.log("Pew done!")
 		})
 
 	    scene.add(this.bullet)
@@ -135,7 +132,6 @@ class Player extends GameUnit
     }
 
     onclick(keyboard, scene) {
-	console.log("pew!")
 	this.shootBullet(scene)
     }
 
@@ -188,14 +184,11 @@ class Player extends GameUnit
 	key_cast.ray.origin.y += 1.7
 	let intersects = key_cast.intersectObjects(doorKey)
 	if (intersects.length > 0) {
-		// console.log("I see a keypart!");
 		let keyPart = this.inventory.find(item => {
 			return item.name == intersects[0].object.name
 		})
 		if ( keyPart ) {
 			if (keyboard.pressed("E")) {
-				console.log(keyPart);
-				console.log(intersects);
 				this.placeKeyPart(scene, keyPart, intersects[0].object)
 			}
 		}

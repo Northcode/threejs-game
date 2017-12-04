@@ -50,7 +50,6 @@ class Zombie extends GameUnit
 
 	this.rotationMatrix.extractRotation(this.model.matrix)
 
-	// console.log(scene.player.model.position.clone())
 	if (!this.isDead) {
 	    this.lookAt(scene.player.model.position.clone())
 

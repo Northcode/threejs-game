@@ -31,7 +31,6 @@ class SizedPart extends Part
 class Block extends SizedPart
 {
     build(scene) {
-	// console.log ("building block of size: " + this.w + "," + this.h + "," + this.d + " at: " + this.x + "," + this.y + "," + this.z)
 	load_texture("assets/textures/brick.jpg").then(tex => {
 
 	    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
@@ -164,7 +163,6 @@ class CubeItemPart extends Part
 		let keyPart = keyParts[index]
 		keyParts.splice(index, 1)
 		keyPart.material = new  THREE.MeshStandardMaterial({ color: get_key_color(keyPart) })
-		console.log(keyPart);
 	    item.model.add(keyPart)
 		item.name = keyPart.name
 	})
@@ -191,7 +189,6 @@ class MovingPlatformPart extends Part
 	let platform = new MovingPlatform()
 	platform.startpos.copy(start_point)
 	platform.endpos.copy(get_grid_pos(this.x,this.y,this.z))
-	console.log("Built moving platform between: " + vec_to_str(start_point) + " and: " + vec_to_str(platform.endpos))
 	platform.rebuild_tween()
 	gameobjects.push(platform)
 	scene.ground.push(platform.model)
@@ -282,9 +279,7 @@ const generate_block = (x,y,z, chr, scene, gameobjects) => {
 	movingplatform_points.push(new THREE.Vector3(x,y,z))
     } break
     case 'N': {
-	console.log("looking for start points from: " + vec_to_str(new THREE.Vector3(x,y,z)))
 	movingplatform_points = movingplatform_points.filter(p => {
-	    console.log("have point: " + vec_to_str(p))
 	    if(p.x == x || p.z == z) {
 		let part = new MovingPlatformPart(x,y,z, 0x22aa22)
 		let gp = get_grid_pos(p.x, p.y, p.z)
