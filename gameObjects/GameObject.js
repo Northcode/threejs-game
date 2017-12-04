@@ -4,7 +4,7 @@ class GameObject
     }
 
     destroy() {}
-    
+
     animate(delta) {
     }
 
@@ -39,6 +39,7 @@ class GameUnit extends GameObject
 	this.stuntime = 50
 	this.knockbackmulti = 8
 	this.movement.knockback = zero_vec.clone()
+	this.animationAction = null
     }
 
     forward() {
@@ -117,18 +118,20 @@ class GameUnit extends GameObject
 
     animate(delta) {
 		if (this.object != null) {
-			let animationAction = this.animationMixer.clipAction( this.object.animations[ 0 ] )
+			if (this.animationAction == null) {
+				this.animationAction = this.animationMixer.clipAction( this.object.animations[ 0 ] )
+			}
 			if (this.is_moving()) {
 				if (this.movement.sprinting) {
 					delta *= 2
 				}
-				if (!animationAction.isRunning()) {
-					animationAction.play();
+				if (!this.animationAction.isRunning()) {
+					this.animationAction.play();
 				}
 				this.animationMixer.update( delta * 2);
 			}else {
-				if (animationAction.isRunning()) {
-					animationAction.stop();
+				if (this.animationAction.isRunning()) {
+					this.animationAction.stop();
 				}
 			}
 		}
