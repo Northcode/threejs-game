@@ -105,6 +105,25 @@
 		 color: #ffffff;
 	 }
 
+	 #helper {
+		 position: absolute;
+		 width: auto;
+		 height: auto;
+		 top: 50%;
+		 left: 50%;
+
+  		 margin-top: -30px;
+  		 margin-left: 20px;
+		 padding: 15px;
+		 border-radius: 5px;
+		 background-color: rgba(20, 20, 20, 0.5);
+
+		 color: #ffffff;
+		 text-align: center;
+		 font-family: verdana;
+		 font-size: 150%;
+	 }
+
 	 progress[value] {
 		 -webkit-appearance: none;
 		 -moz-appearance: none;
@@ -131,7 +150,8 @@
 			</div>
 		</div>
 		<div id="crosshair">
-			+
+		</div>
+		<div id="helper">
 		</div>
 
 		<script src="lib/three.js"></script>
@@ -174,6 +194,7 @@
 	 let clock = new THREE.Clock();
 	 let screenBlocker = document.getElementById('blocker')
 	 let instructions = document.getElementById('instructions')
+	 let crosshair = document.getElementById('crosshair')
 	 instructions.innerHTML = "Click anywhere on the screen to begin"
 
 	 let paused = false
@@ -196,6 +217,7 @@
 	 camera.add(audioListener)
 	 let audioLoader = new THREE.AudioLoader()
 
+	 /* Credit for the background music to user blimp66 on freesound.org */
 	 let backgroundmusic = new THREE.Audio(audioListener)
 	 audioLoader.load('assets/music/88155__blimp66__a-silly-vocal-tune.mp3', buffer =>{
 		 backgroundmusic.setBuffer(buffer)
@@ -214,6 +236,7 @@
 		pickupsound.setVolume(0.6)
 	 })
 
+	 /* Credit for the zombie hurt sound to user cabled_mess on freesound.org */
 	 let zombiehurtsound = new THREE.Audio(audioListener)
 	 audioLoader.load('assets/music/350919__cabled-mess__hurt-c-05.wav', buffer =>{
 		 zombiehurtsound.setBuffer(buffer)
@@ -357,14 +380,16 @@
 	     camera_controls.enabled = true;
 		 screenBlocker.style.display = 'none'
 	     scene.onSimulationResume()
+		 crosshair.innerHTML = "+"
 		 paused = false
 		 backgroundmusic.play()
 		 physLoop.start()
 	 }, () => {
 	     camera_controls.enabled = false;
 	     screenBlocker.style.display = 'block'
+		 crosshair.innerHTML = ""
 		 if (scene.player.lives > 0) {
-			 document.getElementById('instructions').innerHTML = "Paused</br>Click to continue"
+			 document.getElementById('instructions').innerHTML = "Paused</br>Click to continue</br></br>W, A, S and D to move. SHIFT to sprint"
 		 }
 	     /* instructions.style.display = 'instructions'*/
 		 paused = true

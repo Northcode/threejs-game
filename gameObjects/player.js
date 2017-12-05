@@ -19,6 +19,11 @@ class Player extends GameUnit
 	this.lives = 5
 	this.gunDamage = 25
 
+	this.havePart = false
+	this.dontHave = false
+	this.helper = document.getElementById('helper')
+	this.helper.style.display = 'none'
+
 	this.hitbar = document.getElementById("health")
 
 	this.gunSound = new THREE.Audio(audioListener)
@@ -188,10 +193,27 @@ class Player extends GameUnit
 			return item.name == intersects[0].object.name
 		})
 		if ( keyPart ) {
+			if (!this.havePart) {
+				this.helper.innerHTML = "Press E to place"
+				this.helper.style.display = 'block'
+				this.havePart = true
+				this.dontHave = false
+			}
 			if (keyboard.pressed("E")) {
 				this.placeKeyPart(scene, keyPart, intersects[0].object)
 			}
+		}else {
+			if (!this.dontHave) {
+				this.helper.innerHTML = "Key part is missing"
+				this.helper.style.display = 'block'
+				this.havePart = false
+				this.dontHave = true
+			}
 		}
+	}else if (this.dontHave || this.havePart) {
+		this.helper.style.display = 'none'
+		this.havePart = false
+		this.dontHave = false
 	}
 
 	super.update(keyboard, scene)
