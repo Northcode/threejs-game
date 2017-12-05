@@ -278,6 +278,33 @@
 	 // LEVEL MANAGER & LEVELS
 	 let levelmanager = new LevelManager()
 
+	 /*
+
+	    Levels are made with strings in the level manager.
+
+	    Each Y level must be perceeded by a number specifying which level it is on
+	    Each character becomes a different kind of block
+
+	    A space just signigies nothing
+	    #: A brick wall block.
+	    _: A roof, thin platform on the top of the block you can walk ontop of and under.
+	    -: smaller platform in the middle of a block.
+	    .: tiny platform at the bottom of a block.
+	    </>/^/v : stairs in different directions, the arrow specifies the downward direction.
+	    Z: A spawnpoint for zombies
+	    c: A key fragment
+	    M: Starting point for moving platforms
+	    N: Endpoint for moving platforms.
+	    D: Door, always faces north.
+	    E: End block, black block that loads the next level when the player collides with it.
+
+	    About moving platforms:
+	    They can only move on one of the axes x or z.
+	    They can move accross Y levels.
+	    
+	    
+	 */
+
 	 levelmanager.add_level(
 	     `0
 ##########
