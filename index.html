@@ -209,6 +209,9 @@
 	 scene.setGravity(new THREE.Vector3(0,-30,0))
 	 scene.background = new THREE.Color(0x3d8dcc)
 
+	 scene.noOfLevels = 0
+	 scene.finishedGame = false
+
 	 // CAMERA
 	 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
 
@@ -267,6 +270,59 @@
 	 levelmanager.add_level(
 	     `0
 ##########
+###    ###
+###    ###
+###    ###
+##########
+##########
+##########
+##########
+##########
+1
+##########
+# _  _   #
+#        #
+# _    Z #
+# _      #
+# v      #
+# c      #
+# S      #
+##########
+2
+##########
+# c   <_##
+#       ##
+#        #
+#        #
+#        #
+#        #
+##########
+##########
+3
+##########
+##___    #
+#M  _   c#
+#   _   .#
+#       .#
+#N  _   .#
+#   -   .#
+#Z       #
+##########
+4
+##########
+# c      #
+#  #D#   #
+#  #E#   #
+#  ###   #
+#   c    #
+#        #
+#        #
+##########
+	     `)
+
+	 levelmanager.add_level(
+	     `0
+##########
 #####    #
 #####    #
 #   #    #
@@ -318,64 +374,13 @@
         E
 	     `)
 
-	 levelmanager.add_level(
-	     `0
-##########
-##########
-##########
-##########
-##########
-##########
-##########
-##########
-##########
-1
-##########
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-#       S#
-##########
-2
-##########
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-##########
-3
-##########
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-##########
-4
-##########
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-#        #
-##########
-	     `)
-
 	 let camera_controls = new THREE.PointerLockControls(camera)
 
 	 setup_pointer_lock(() => {
-		 if (scene.player.lives <= 0) {
-		 	levelmanager.load_level(0, scene, gameobjects, camera_controls)
+		 if (scene.player.lives <= 0 || scene.finishedGame) {
+			 scene.finishedGame = false
+			 levelmanager.load_level(0, scene, gameobjects, camera_controls)
+			 scene.currentlevel = 0
 		 }
 	     camera_controls.enabled = true;
 		 screenBlocker.style.display = 'none'
@@ -388,8 +393,10 @@
 	     camera_controls.enabled = false;
 	     screenBlocker.style.display = 'block'
 		 crosshair.innerHTML = ""
-		 if (scene.player.lives > 0) {
+		 if (scene.player.lives > 0 && !scene.finishedGame) {
 			 document.getElementById('instructions').innerHTML = "Paused</br>Click to continue</br></br>W, A, S and D to move. SHIFT to sprint"
+		 }else if (scene.finishedGame) {
+			 document.getElementById('instructions').innerHTML = "VICTORY!</br></br>Click to restart"
 		 }
 	     /* instructions.style.display = 'instructions'*/
 		 paused = true
@@ -402,7 +409,13 @@
 	 scene.currentlevel = 0
 	 scene.nextlevel = () => {
 	     scene.currentlevel++
-	     levelmanager.load_level(scene.currentlevel, scene, gameobjects, camera_controls)
+		 console.log(scene.currentlevel + " " + scene.noOfLevels);
+		 if (scene.currentlevel >= scene.noOfLevels) {
+			 scene.finishedGame = true
+			 document.exitPointerLock()
+		 }else {
+			 levelmanager.load_level(scene.currentlevel, scene, gameobjects, camera_controls)
+		 }
 	 }
 
 	 scene.numberofenemies = 0

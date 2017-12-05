@@ -7,6 +7,7 @@ class LevelManager
 
     add_level(str) {
 	this.levels.push(str)
+	scene.noOfLevels++
     }
 
     load_level(nr,scene,gameobjects,camera_controls) {
@@ -62,5 +63,6 @@ class LevelManager
 	while ((it = gameobjects.pop()) != undefined) {
 	    it.destroy()
 	}
+	scene.numberofenemies = 0
     }
 }
