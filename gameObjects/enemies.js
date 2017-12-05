@@ -1,3 +1,21 @@
+/*
+
+  File: enemies.js
+
+  This file contains the logic for all the enemies,
+  Currently the Zombie and the ZombieSpawner.
+  
+  The Zombie handles movement and death of the Zombie enemies.
+
+  The Zombie spawner continously spawns new zombies every 200 ticks,
+  unless there are more than the max allowed amount in the scene.
+
+  
+  The Zombies have a timer to only execute their physics loop every 8 ticks,
+  this has the effect of drastically improving performance, like, a lot,
+  while not hampering their ability to move or hurt the player.
+
+ */
 class Zombie extends GameUnit
 {
     constructor(){

@@ -1,3 +1,12 @@
+/*
+  File: util.js
+
+  This is a utility function file,
+  it contains various functions and constants used everywhere else in the program
+
+
+ */
+
 const setup_pointer_lock = function(onlock,onunlock, onclick) {
     let havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document
 

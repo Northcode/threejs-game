@@ -1,3 +1,13 @@
+/*
+
+  File: levelmanager.js
+
+  This file handles loading of levels and stores the different levels.
+  This abstracts all the work of loading a scene with a level to essentially just calling load_level.
+
+  
+
+ */
 class LevelManager
 {
     constructor() {

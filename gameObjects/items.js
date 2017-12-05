@@ -1,3 +1,11 @@
+/*
+
+  File: items.js
+
+  This file contains the items.
+  For now this is just the key parts.
+
+ */
 class CubeItem extends GameObject
 {
     constructor() {

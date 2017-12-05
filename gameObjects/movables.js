@@ -1,3 +1,13 @@
+/*
+
+  File: movables.js
+
+  This file contains stuff that moves that isn't a GameUnit, 
+  currently on the Door at the end of the level and the Moving platforms.
+
+  They move with Tweens which are specified in the rebuild_tween functions
+
+ */
 class MovingPlatform extends GameObject
 {
     constructor(color) {

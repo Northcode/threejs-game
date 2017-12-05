@@ -1,3 +1,15 @@
+/*
+
+  File: GameObject.js
+  
+  This file provides a parent class for all objects that require updating in the game,
+  The animate function is called every animation loop and is provided with the time delta since last frame.
+  The update loop is called every physics loop and is provided the keyboard controls and the scene object.
+
+  GameUnit provides the functionality for any unit in the scene, like the player and enemies.
+  It provides movement and health base functionality for each unit that is easy to build upon for subclasses.
+
+ */
 class GameObject
 {
     constructor() {

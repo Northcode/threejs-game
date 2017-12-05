@@ -1,3 +1,17 @@
+<!--
+     Finale project: index file
+
+     This is the main index file, it handles all UI,
+     seting up a canvas and renderer and initializes the code pulled from the other js files.
+
+     The UI is done with normal html and css.
+     All levels are defined in index and get handled by the levelmanager.
+
+     Furthermore, index sets up the physics and rendering loop,
+     and makes sure to call the update functions on the relevant game objects
+     
+
+   -->
 <html>
 
     <head>
@@ -258,14 +272,11 @@
 	 renderer.gammaInput = true
 	 renderer.gammaOutput = true
 
-	 let levelmanager = new LevelManager()
-
-	 //
-	 // :::::::::::::::::::::::::::::: LOAD OBJECTS :::::::::::::::::::::::::::::
-	 //
-
 	 // KEYBOARD
 	 let keyboard = new THREEx.KeyboardState()
+
+	 // LEVEL MANAGER & LEVELS
+	 let levelmanager = new LevelManager()
 
 	 levelmanager.add_level(
 	     `0
@@ -406,6 +417,7 @@
 	     scene.player.onclick(keyboard, scene)
 	 });
 
+	 // LOAD THE FIRST LEVEL
 	 scene.currentlevel = 0
 	 scene.nextlevel = () => {
 	     scene.currentlevel++
@@ -441,13 +453,6 @@
 	     scene.simulate()
 	 }
 
-	 scene.addEventListener('update', () => {
-	 })
-
-	 //
-	 // :::::::::::::: UTIL FUNCTIONS ::::::::::::::::::::
-	 //
-
 	 let animLoop = new THREEx.RenderingLoop()
 	 let physLoop = new THREEx.PhysicsLoop(60)
 
@@ -455,8 +460,6 @@
 	 physLoop.add(update)
 
 	 animLoop.start()
-	 // physLoop.start()
-
 
 	</script>
     </body>

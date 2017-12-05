@@ -1,3 +1,15 @@
+/*
+  File: player.js
+
+
+  This is the main player class, it handles basically everything the player does in the game.
+  The movement itself is done by GameUnit,
+  which shrinks the update loop code to basically checking keypresses and doing stuff with them.
+
+  The player also has extra functionality for shooting bullets and picking up items.
+  
+
+ */
 class Player extends GameUnit
 {
     constructor(controls) {

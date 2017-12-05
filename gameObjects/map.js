@@ -1,3 +1,22 @@
+/*
+
+  File: map.js
+
+  This entire file handles map generation, 
+  it defines all the different building blocks a map can be built out of.
+
+  The map is constructed from a grid system,
+  and the levels are generated from a string containing different characters for each block.
+
+  All the blocks inherit from the Part class, which share a constructor containing grid position and color of the block.
+  The "Block" class also extends SizedPart, which means it also has a defined size instead of the default {1,1,1}.
+
+  This is used to optimize generation of blocks, as having less of them makes the scene less laggy.
+
+  The bulk of the work for positioning is done in the generate_block and generate_map_from functions,
+  but the actually construction of the objects is done inside each blocks build function.
+
+ */
 
 const get_grid_pos = (x,y,z) => new THREE.Vector3(x*8,y*6 - 3,z*8)
 

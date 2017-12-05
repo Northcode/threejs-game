@@ -1,0 +1,15 @@
+* Datamaskingrafikk prosjekt: Finale
+  Andreas Larsen og Ådne E. Moldesæter
+
+** Fil struktur
+   Vi har lagt det meste av script og kode i mappen gameObjects,
+   med unntak av tredjeparts bibliotek vi bruker,
+   som ligger i lib mappen.
+
+   Alle assets (teksturer, lyder, modeller) ligger i assets mappen og er videre sortert i undermapper.
+   
+** Tema: Homemade
+   Vi har prøvd å holde oss til et "homemade" tema, med enkle teksturer, og alle lydeffektene er laget av stemmer.
+
+** Kodedokumentasjon
+   Videre dokumentasjon av kode ligger i script filene.
