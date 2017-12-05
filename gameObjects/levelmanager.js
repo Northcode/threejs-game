@@ -5,7 +5,7 @@
   This file handles loading of levels and stores the different levels.
   This abstracts all the work of loading a scene with a level to essentially just calling load_level.
 
-  
+
 
  */
 class LevelManager
@@ -28,6 +28,7 @@ class LevelManager
 	let player = new Player(camera_controls)
 
 	scene.player = player
+	scene.player.update_inventory
 
 	gameobjects.push(player)
 	scene.add(player.model)
